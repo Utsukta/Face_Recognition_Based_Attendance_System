@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <g id="icon-busTicket" transform="translate(-188 -395)">
+    <g id="school-bus" transform="translate(187 394)">
+      <path id="Path_1352" data-name="Path 1352" d="M35.5,34.028H11.456A2.459,2.459,0,0,1,9,31.572V5.456A2.459,2.459,0,0,1,11.456,3H35.5A2.459,2.459,0,0,1,37.96,5.456V31.572A2.459,2.459,0,0,1,35.5,34.028ZM11.456,4.034a1.424,1.424,0,0,0-1.422,1.422V31.572a1.424,1.424,0,0,0,1.422,1.422H35.5a1.424,1.424,0,0,0,1.422-1.422V5.456A1.424,1.424,0,0,0,35.5,4.034Z" transform="translate(-2.897)" fill="#dda601" stroke="#dda601" stroke-miterlimit="10" stroke-width="0.4"/>
+      <path id="Path_1353" data-name="Path 1353" d="M37.96,27.48H9V13H37.96ZM10.034,26.446H36.926V14.034H10.034Z" transform="translate(-2.897 -4.829)" fill="#dda601" stroke="#dda601" stroke-miterlimit="10" stroke-width="0.4"/>
+      <path id="Path_1354" data-name="Path 1354" d="M49.586,51.171a2.586,2.586,0,1,1,2.586-2.586,2.586,2.586,0,0,1-2.586,2.586Zm0-4.137a1.551,1.551,0,1,0,1.551,1.551A1.551,1.551,0,0,0,49.586,47.034Z" transform="translate(-21.246 -20.763)" fill="#dda601" stroke="#dda601" stroke-miterlimit="10" stroke-width="0.4"/>
+      <path id="Path_1355" data-name="Path 1355" d="M19.586,51.171a2.586,2.586,0,1,1,2.586-2.586A2.586,2.586,0,0,1,19.586,51.171Zm0-4.137a1.551,1.551,0,1,0,1.551,1.551A1.551,1.551,0,0,0,19.586,47.034Z" transform="translate(-6.76 -20.763)" fill="#dda601" stroke="#dda601" stroke-miterlimit="10" stroke-width="0.4"/>
+      <path id="Path_1356" data-name="Path 1356" d="M51.075,66.171H47.649A1.65,1.65,0,0,1,46,64.523V61h6.723v3.523A1.65,1.65,0,0,1,51.075,66.171Zm-4.04-4.137v2.489a.615.615,0,0,0,.614.614h3.426a.615.615,0,0,0,.614-.614V62.034Z" transform="translate(-20.763 -28.006)" fill="#dda601" stroke="#dda601" stroke-miterlimit="10" stroke-width="0.4"/>
+      <path id="Path_1357" data-name="Path 1357" d="M20.075,66.171H16.649A1.65,1.65,0,0,1,15,64.523V61h6.723v3.523A1.65,1.65,0,0,1,20.075,66.171Zm-4.04-4.137v2.489a.615.615,0,0,0,.614.614h3.426a.615.615,0,0,0,.614-.614V62.034Z" transform="translate(-5.794 -28.006)" fill="#dda601" stroke="#dda601" stroke-miterlimit="10" stroke-width="0.4"/>
+      <path id="Path_1358" data-name="Path 1358" d="M67.62,23.326H64V22.292h2.586V17.034H64.517V16h3.1Z" transform="translate(-29.454 -6.277)" fill="#dda601" stroke="#dda601" stroke-miterlimit="10" stroke-width="0.4"/>
+      <path id="Path_1359" data-name="Path 1359" d="M6.62,23.326H3V16H6.1v1.034H4.034v5.258H6.62Z" transform="translate(0 -6.277)" fill="#dda601" stroke="#dda601" stroke-miterlimit="10" stroke-width="0.4"/>
+      <path id="Path_1360" data-name="Path 1360" d="M36,14h1.034V27.446H36Z" transform="translate(-15.934 -5.311)" fill="#dda601" stroke="#dda601" stroke-miterlimit="10" stroke-width="0.4"/>
+      <path id="Path_1361" data-name="Path 1361" d="M31,50h6.206v1.034H31Z" transform="translate(-13.52 -22.694)" fill="#dda601" stroke="#dda601" stroke-miterlimit="10" stroke-width="0.4"/>
+    </g>
+    <rect id="Rectangle_319" data-name="Rectangle 319" width="40" height="40" transform="translate(188 395)" fill="none"/>
+  </g>
+</svg>

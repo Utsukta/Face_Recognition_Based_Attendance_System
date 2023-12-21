@@ -9,6 +9,8 @@ class Face_Recognition_Attendance_System:
         self.root.title("Face Recognition system")
         self.root.configure(bg="white")
 
+        
+
         # Create an instance of the Shared class
         self.shared_instance = Shared(self.root)
         
