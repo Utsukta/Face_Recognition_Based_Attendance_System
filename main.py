@@ -1,21 +1,15 @@
 import threading
 from tkinter import *
 import tkinter
-
 from PIL import Image, ImageTk
-import imageio
-from tkvideo import tkvideo
-
-from constants import Constants
-
 
 class Face_Recognition_Attendance_System:
     def __init__(self, root):
         self.root = root
         self.root.geometry("1440x900+0+0")
         self.root.minsize(1440,900)
+        self.root.maxsize(1440,900)
         self.root.title("Face Recognition system")
-        # self.root.configure(bg="black")
 
         # Create an instance of the Shared class
         from shared import Shared

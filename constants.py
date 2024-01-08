@@ -4,3 +4,4 @@ class Constants:
         shared_text_color="white"
         content_background_color="white"
         frame_content_text_color="Black"
+        Add_Employee_font="times new roman"
