@@ -86,11 +86,13 @@ class Shared:
     def on_attendance_label_clicked(self,event):
             print("clicked attendance")   
     def on_Exit_label_clicked(event):
-            
             print("clicked exit")
     # def on_home_label_clicked(event):
     #         print("clicked")
-
-
+print("done")
+if __name__ == "__main__":
+        root = Tk()
+        shared_obj= Shared(root)
+        root.mainloop()
 
 

@@ -11,7 +11,6 @@ class Employee_Details:
         #instance of shared
         from shared import Shared
         self.shared=Shared(self.root)
-
         self.shared_frame = Frame(root, bg="white")
         self.shared_frame.place(x=160, y=0, width=1000, height=900)
         Employee_details_label= Label(text="Employee Details", bg=Constants.content_background_color, fg=Constants.shared_text_color)

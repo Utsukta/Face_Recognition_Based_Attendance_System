@@ -28,6 +28,7 @@ class Face_Recognition_Attendance_System:
 
         home_img_label=Label(image=self.home_img)
         home_img_label.place(x=190,y=0)
+       
         
         
 
