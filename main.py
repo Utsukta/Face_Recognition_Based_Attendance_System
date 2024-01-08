@@ -15,7 +15,7 @@ class Face_Recognition_Attendance_System:
         self.root.geometry("1440x900+0+0")
         self.root.minsize(1440,900)
         self.root.title("Face Recognition system")
-        self.root.configure(bg="white")
+        # self.root.configure(bg="black")
 
         # Create an instance of the Shared class
         from shared import Shared
