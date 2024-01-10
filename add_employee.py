@@ -61,7 +61,6 @@ class AddEmployee:
         gender_combo["values"] = ( "Male", "Female","Other")
         gender_combo.current(0)
         gender_combo.grid(row=1, column=3, padx=2, pady=15, sticky=tk.W)
-        
 
         # Joined Date
         joined_label = Label(left_frame, text="Joined Date", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
@@ -108,10 +107,9 @@ class AddEmployee:
         radiobtn2=Radiobutton(left_frame,text="No Photos",font=(Constants.Add_Employee_font ,15), value="yes",bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         radiobtn2.grid(row=10,column=1)
 
-
         #button_frame
         btn_frame = Frame(left_frame,bg=Constants.content_background_color)
-        btn_frame.place(x=40, y=270, width=1200, height=50)
+        btn_frame.place(x=40, y=270, width=1100, height=50)
 
         #save_button
         save_btn=Button(btn_frame, text="Save",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
@@ -162,12 +160,66 @@ class AddEmployee:
         right_frame = LabelFrame(bg_img,bd=10,bg=Constants.content_background_color,fg=Constants.frame_content_text_color,text="Employee Details",relief=RIDGE, font=("times new roman", 18 ))
         right_frame.place(x=45, y=440, width=1227, height=400)
 
+              #search system  
+        search_frame = LabelFrame(right_frame,bd=2,bg=Constants.content_background_color,fg=Constants.frame_content_text_color,text="Search by system",relief=RIDGE, font=("times new roman", 15 ))
+        search_frame.place(x=10, y=10, width=1500, height=80)
         
+        search_label = Label(search_frame, text="Search By:", font=(Constants.Add_Employee_font, 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        search_label.grid(row=0, column=0, padx=10, pady=15)
         
+        search_combo = ttk.Combobox(search_frame, font=(Constants.Add_Employee_font , 15, "bold"), width=28, state="readonly")
+        search_combo["values"] = ( "select", "Name","Mobile number","Department")
+        search_combo.current(0)
+        search_combo.grid(row=0, column=1, padx=2, pady=15, sticky=tk.W)
+       
+        search_entry = Text(search_frame, font=(Constants.Add_Employee_font , 15 ), width=22,height=1,insertbackground="black" ,bg=Constants.content_background_color,fg=Constants.frame_content_text_color,borderwidth=0,highlightbackground="grey",highlightthickness=2 )
+        search_entry.grid(row=0, column=2, padx=10, pady=15, sticky=tk.W)
+
+        search_btn=Button(search_frame, text="Search",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
+        search_btn.grid(row=0,column=3)
+        
+        white_space=Label(search_frame,bg=Constants.content_background_color, width=3)
+        white_space.grid(row=0,column=4)
+        
+        showAll_btn=Button(search_frame, text="Show All",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
+        showAll_btn.grid(row=0,column=5)
+        #table frame
+        table_frame = Frame(right_frame,bd=2, bg= "green" ,relief=RIDGE )
+        table_frame.place(x=10, y=100, width=1200, height=200)
+        
+        scroll_x=ttk.Scrollbar(table_frame, orient="horizontal")
+        scroll_y=ttk.Scrollbar(table_frame, orient="vertical")
+        
+        self.employee_table=ttk.Treeview(table_frame, column=("dep","name","phone","address","email","joined","salary","emergency","education"),xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set,)
+        
+        scroll_x.pack(side="bottom", fill="x")
+        scroll_y.pack(side="right", fill="y")
+        scroll_x.config(command=self.employee_table.xview)
+        scroll_y.config(command=self.employee_table.yview)
+        self.employee_table.heading("dep", text="Department ")
+        self.employee_table.heading("name", text="Name")
+        self.employee_table.heading("phone", text="Phone number")
+        self.employee_table.heading("address", text="Address")
+        self.employee_table.heading("email", text="Email")
+        self.employee_table.heading("joined", text="Joined")
+        self.employee_table.heading("salary", text="Salary")
+        self.employee_table.heading("emergency", text="Emergency Contacts")
+        self.employee_table.heading("education", text="Education")
+        self.employee_table["show"] = "headings"
+        
+        self.employee_table.column("dep",width=200)
+        self.employee_table.column("name",width=200)
+        self.employee_table.column("phone",width=200)
+        self.employee_table.column("address",width=200)
+        self.employee_table.column("email",width=200)
+        self.employee_table.column("joined",width=200)
+        self.employee_table.column("salary",width=200)
+        self.employee_table.column("emergency",width=150)
+        self.employee_table.column("education",width=100)
+        
+        self.employee_table.pack(fill="both", expand=1)
 
       
-
-
 if __name__ == "__main__":
     root = tk.Tk()
     AddEmployee_obj = AddEmployee(root)

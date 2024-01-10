@@ -24,7 +24,6 @@ class Face_Recognition_Attendance_System:
         home_img_label.place(x=190,y=0)
        
         
-        
 
 if __name__ == "__main__":
     root = Tk()
