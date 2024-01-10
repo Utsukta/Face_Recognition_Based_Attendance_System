@@ -160,9 +160,9 @@ class AddEmployee:
         right_frame = LabelFrame(bg_img,bd=10,bg=Constants.content_background_color,fg=Constants.frame_content_text_color,text="Employee Details",relief=RIDGE, font=("times new roman", 18 ))
         right_frame.place(x=45, y=440, width=1227, height=400)
 
-              #search system  
+        #search system  
         search_frame = LabelFrame(right_frame,bd=2,bg=Constants.content_background_color,fg=Constants.frame_content_text_color,text="Search by system",relief=RIDGE, font=("times new roman", 15 ))
-        search_frame.place(x=10, y=10, width=1500, height=80)
+        search_frame.place(x=10, y=10, width=1190, height=80)
         
         search_label = Label(search_frame, text="Search By:", font=(Constants.Add_Employee_font, 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         search_label.grid(row=0, column=0, padx=10, pady=15)
@@ -184,8 +184,8 @@ class AddEmployee:
         showAll_btn=Button(search_frame, text="Show All",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
         showAll_btn.grid(row=0,column=5)
         #table frame
-        table_frame = Frame(right_frame,bd=2, bg= "green" ,relief=RIDGE )
-        table_frame.place(x=10, y=100, width=1200, height=200)
+        table_frame = Frame(right_frame,bd=2, bg= "white" ,relief=RIDGE )
+        table_frame.place(x=10, y=100, width=1200, height=250)
         
         scroll_x=ttk.Scrollbar(table_frame, orient="horizontal")
         scroll_y=ttk.Scrollbar(table_frame, orient="vertical")
