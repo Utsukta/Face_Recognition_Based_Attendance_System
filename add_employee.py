@@ -207,6 +207,7 @@ class AddEmployee:
         self.employee_table.heading("education", text="Education")
         self.employee_table["show"] = "headings"
         
+
         self.employee_table.column("dep",width=200)
         self.employee_table.column("name",width=200)
         self.employee_table.column("phone",width=200)
@@ -216,7 +217,6 @@ class AddEmployee:
         self.employee_table.column("salary",width=200)
         self.employee_table.column("emergency",width=150)
         self.employee_table.column("education",width=100)
-        
         self.employee_table.pack(fill="both", expand=1)
 
       
