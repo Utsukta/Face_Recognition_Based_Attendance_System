@@ -1,8 +1,9 @@
 import tkinter as tk
-from tkinter import Button, Label, LabelFrame, Frame, RIDGE, Radiobutton, StringVar, Text, ttk
+from tkinter import Button, Label, LabelFrame, Frame, RIDGE, Radiobutton, StringVar, Text, ttk,messagebox
 from tkinter import Entry
 from PIL import Image, ImageTk
 from constants import Constants
+import mysql.connector
 
 class AddEmployee:
     def __init__(self, root):
@@ -22,6 +23,8 @@ class AddEmployee:
         self.var_salary=StringVar()
         self.var_Emergency_contact=StringVar()
         self.var_education=StringVar()
+        self.var_radio1=StringVar()
+        self.var_radio2=StringVar()
         
         #Background Image
         img = Image.open("../Face_recogniton_system/Images/splash-bg.png")
@@ -70,7 +73,7 @@ class AddEmployee:
         gender_label = Label(left_frame, text="Gender", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         gender_label.grid(row=1, column=2, padx=10, pady=15)
         gender_combo = ttk.Combobox(left_frame,textvariable=self.var_gender, font=(Constants.Add_Employee_font , 12, "bold"), width=28, state="readonly")
-        gender_combo["values"] = ( "Male", "Female","Other")
+        gender_combo["values"] = ("Select Gender" ,"Male", "Female","Other")
         gender_combo.current(0)
         gender_combo.grid(row=1, column=3, padx=2, pady=15, sticky=tk.W)
 
@@ -112,11 +115,11 @@ class AddEmployee:
         education_entry.grid(row=9, column=1, padx=10, pady=15, sticky=tk.W)
 
         #radio_buttons1
-        radiobtn1=Radiobutton(left_frame,text="Take Photos", font=(Constants.Add_Employee_font ,15),value="yes",bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        radiobtn1=Radiobutton(left_frame,textvariable=self.var_radio1,text="Take Photos", font=(Constants.Add_Employee_font ,15),value="yes",bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         radiobtn1.grid(row=10,column=0)
 
-        #radio_buttons1
-        radiobtn2=Radiobutton(left_frame,text="No Photos",font=(Constants.Add_Employee_font ,15), value="yes",bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        #radio_buttons2
+        radiobtn2=Radiobutton(left_frame,textvariable=self.var_radio2,text="No Photos",font=(Constants.Add_Employee_font ,15), value="no",bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         radiobtn2.grid(row=10,column=1)
 
         #button_frame
@@ -124,7 +127,7 @@ class AddEmployee:
         btn_frame.place(x=40, y=270, width=1100, height=50)
 
         #save_button
-        save_btn=Button(btn_frame, text="Save",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
+        save_btn=Button(btn_frame, text="Save",command=self.add_data,font=(Constants.Add_Employee_font ,15),highlightthickness=0)
         save_btn.grid(row=0,column=1)
 
         #WhiteSpace_between_buttons
@@ -234,9 +237,24 @@ class AddEmployee:
         self.employee_table.pack(fill="both", expand=1)
 
 
-        #------------function declaration-----------------
-        # def add_data(self):
-
+    #------------function declaration-----------------
+    def add_data(self):
+        if self.var_department.get()=="Select Derpartment" or self.var_address.get()=="" or self.var_email.get()=="" or self.var_education.get()=="" or self.var_gender.get()=="Select Gender" or self.var_joined_date=="" or self.var_phone_number==""or self.var_Emergency_contact=="" or self.var_salary=="":
+           messagebox.showerror("Error","All fields are required",parent=self.root)
+        else:
+            conn=mysql.connector.connect(host="localhost",username="root",password="",database="face_recognizer")
+            my_cursor=conn.cursor()
+            my_cursor.execute("insert into employee values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(
+                self.var_department.get(),
+                self.var_name.get(),
+                self.var_phone_number.get(),
+                self.var_address.get(),
+                self.var_email.get(),
+                self.var_gender.get(),
+                self.var_joined_date.get(),
+                self.var_salary.get(),
+                self.var_Emergency_contact.get(),
+                self.var_education.get(),))
 
       
 if __name__ == "__main__":
