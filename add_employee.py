@@ -241,14 +241,16 @@ class AddEmployee:
 
     #------------function declaration-----------------
     def add_data(self):
-        if self.var_department.get()=="Select Derpartment" or self.var_address.get()=="" or self.var_email.get()=="" or self.var_education.get()=="" or self.var_gender.get()=="Select Gender" or self.var_joined_date=="" or self.var_phone_number==""or self.var_Emergency_contact=="" or self.var_salary=="":
+        if self.var_department.get()=="Select Derpartment" or self.var_address.get()=="" or self.var_email.get()=="" or self.var_employee_id.get()=="" or self.var_gender.get()=="Select Gender" or self.var_joined_date.get()=="" or self.var_phone_number.get()==""or self.var_Emergency_contact.get()=="" or self.var_salary.get()=="":
            messagebox.showerror("Error","All fields are required",parent=self.root)
         else:
             try:
-                conn=mysql.connector.connect(host="localhost",username="root",password="",database="face_recognizer")
+                print("up")
+                conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
                 my_cursor=conn.cursor()
-                my_cursor.execute("insert into employee values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(
-                self.var_employee_id(),
+                print("between")
+                my_cursor.execute("insert into employee values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(
+                self.var_employee_id.get(),
                 self.var_department.get(),
                 self.var_name.get(),
                 self.var_phone_number.get(),
@@ -261,6 +263,7 @@ class AddEmployee:
                 self.var_radio1.get()))
                 conn.commit()
                 conn.close()
+                print("down")
                 messagebox.showinfo("Success","All details added",parent=self.root)
             except Exception as e:
                 messagebox.showerror("Error",str(e), parent=self.root)
