@@ -22,7 +22,7 @@ class AddEmployee:
         self.var_joined_date=StringVar()
         self.var_salary=StringVar()
         self.var_Emergency_contact=StringVar()
-        self.var_education=StringVar()
+        self.var_employee_id=StringVar()
         self.var_radio1=StringVar()
  
         
@@ -107,11 +107,11 @@ class AddEmployee:
         emergency_entry = ttk.Entry(left_frame, textvariable=self.var_Emergency_contact,font=(Constants.Add_Employee_font , 15 ), width=22 )
         emergency_entry.grid(row=2, column=5, padx=10, pady=15, sticky=tk.W)
 
-        # Educational Background
-        education_label = Label(left_frame, text="Educational Background", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
-        education_label.grid(row=9, column=0, padx=10, pady=15)
+        # Employee_id
+        employee_id_label = Label(left_frame, text="Employee Id", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        employee_id_label.grid(row=9, column=0, padx=10, pady=15)
 
-        education_entry = ttk.Entry(left_frame, textvariable=self.var_education,font=(Constants.Add_Employee_font , 15 ), width=22)
+        education_entry = ttk.Entry(left_frame, textvariable=self.var_employee_id,font=(Constants.Add_Employee_font , 15 ), width=22)
         education_entry.grid(row=9, column=1, padx=10, pady=15, sticky=tk.W)
 
         #radio_buttons1
@@ -205,12 +205,13 @@ class AddEmployee:
         scroll_x=ttk.Scrollbar(table_frame, orient="horizontal")
         scroll_y=ttk.Scrollbar(table_frame, orient="vertical")
         
-        self.employee_table=ttk.Treeview(table_frame, column=("dep","name","phone","address","email","gender","joined","salary","emergency","education"),xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set,)
+        self.employee_table=ttk.Treeview(table_frame, column=("employee_id","dep","name","phone","address","email","gender","joined","salary","emergency","photo_sample"),xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set,)
         
         scroll_x.pack(side="bottom", fill="x")
         scroll_y.pack(side="right", fill="y")
         scroll_x.config(command=self.employee_table.xview)
         scroll_y.config(command=self.employee_table.yview)
+        self.employee_table.heading("employee_id", text="Employee Id")
         self.employee_table.heading("dep", text="Department ")
         self.employee_table.heading("name", text="Name")
         self.employee_table.heading("phone", text="Phone number")
@@ -220,10 +221,10 @@ class AddEmployee:
         self.employee_table.heading("joined", text="Joined")
         self.employee_table.heading("salary", text="Salary")
         self.employee_table.heading("emergency", text="Emergency Contacts")
-        self.employee_table.heading("education", text="Education")
+        self.employee_table.heading("photo_sample", text="Photo Sample")
         self.employee_table["show"] = "headings"
         
-
+        self.employee_table.column("employee_id",width=100)
         self.employee_table.column("dep",width=200)
         self.employee_table.column("name",width=200)
         self.employee_table.column("phone",width=200)
@@ -233,7 +234,8 @@ class AddEmployee:
         self.employee_table.column("joined",width=200)
         self.employee_table.column("salary",width=200)
         self.employee_table.column("emergency",width=150)
-        self.employee_table.column("education",width=100)
+        self.employee_table.column("photo_sample",width=150)
+        
         self.employee_table.pack(fill="both", expand=1)
 
 
@@ -246,6 +248,7 @@ class AddEmployee:
                 conn=mysql.connector.connect(host="localhost",username="root",password="",database="face_recognizer")
                 my_cursor=conn.cursor()
                 my_cursor.execute("insert into employee values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(
+                self.var_employee_id(),
                 self.var_department.get(),
                 self.var_name.get(),
                 self.var_phone_number.get(),
@@ -255,7 +258,6 @@ class AddEmployee:
                 self.var_joined_date.get(),
                 self.var_salary.get(),
                 self.var_Emergency_contact.get(),
-                self.var_education.get(),
                 self.var_radio1.get()))
                 conn.commit()
                 conn.close()
