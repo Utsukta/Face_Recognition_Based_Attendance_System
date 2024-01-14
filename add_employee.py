@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import Button, Label, LabelFrame, Frame, RIDGE, Radiobutton, Text, ttk
+from tkinter import Button, Label, LabelFrame, Frame, RIDGE, Radiobutton, StringVar, Text, ttk
 from tkinter import Entry
 from PIL import Image, ImageTk
 from constants import Constants
@@ -10,6 +10,18 @@ class AddEmployee:
         self.root.geometry("1440x900+0+0")
         self.root.minsize(1440, 900)
         self.root.maxsize(1440,900)
+
+        #------------Varibales------------
+        self.var_department=StringVar()
+        self.var_name=StringVar()
+        self.var_phone_number=StringVar()
+        self.var_address=StringVar()
+        self.var_email=StringVar()
+        self.var_gender=StringVar()
+        self.var_joined_date=StringVar()
+        self.var_salary=StringVar()
+        self.var_Emergency_contact=StringVar()
+        self.var_education=StringVar()
         
         #Background Image
         img = Image.open("../Face_recogniton_system/Images/splash-bg.png")
@@ -182,7 +194,7 @@ class AddEmployee:
         
         showAll_btn=Button(search_frame, text="Show All",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
         showAll_btn.grid(row=0,column=5)
-        
+
         #table frame
         table_frame = Frame(right_frame,bd=2, bg= "white" ,relief=RIDGE )
         table_frame.place(x=10, y=100, width=1200, height=250)
@@ -190,7 +202,7 @@ class AddEmployee:
         scroll_x=ttk.Scrollbar(table_frame, orient="horizontal")
         scroll_y=ttk.Scrollbar(table_frame, orient="vertical")
         
-        self.employee_table=ttk.Treeview(table_frame, column=("dep","name","phone","address","email","joined","salary","emergency","education"),xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set,)
+        self.employee_table=ttk.Treeview(table_frame, column=("dep","name","phone","address","email","gender","joined","salary","emergency","education"),xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set,)
         
         scroll_x.pack(side="bottom", fill="x")
         scroll_y.pack(side="right", fill="y")
@@ -201,6 +213,7 @@ class AddEmployee:
         self.employee_table.heading("phone", text="Phone number")
         self.employee_table.heading("address", text="Address")
         self.employee_table.heading("email", text="Email")
+        self.employee_table.heading("gender", text="Gender")
         self.employee_table.heading("joined", text="Joined")
         self.employee_table.heading("salary", text="Salary")
         self.employee_table.heading("emergency", text="Emergency Contacts")
@@ -213,11 +226,17 @@ class AddEmployee:
         self.employee_table.column("phone",width=200)
         self.employee_table.column("address",width=200)
         self.employee_table.column("email",width=200)
+        self.employee_table.column("gender",width=200)
         self.employee_table.column("joined",width=200)
         self.employee_table.column("salary",width=200)
         self.employee_table.column("emergency",width=150)
         self.employee_table.column("education",width=100)
         self.employee_table.pack(fill="both", expand=1)
+
+
+        #------------function declaration-----------------
+        # def add_data(self):
+
 
       
 if __name__ == "__main__":
