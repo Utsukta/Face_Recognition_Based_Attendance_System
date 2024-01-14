@@ -155,7 +155,6 @@ class AddEmployee:
         reset_btn=Button(btn_frame, text="Update Photo Samples",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
         reset_btn.grid(row=0,column=11)
 
-
         #Right Frame
         right_frame = LabelFrame(bg_img,bd=10,bg=Constants.content_background_color,fg=Constants.frame_content_text_color,text="Employee Details",relief=RIDGE, font=("times new roman", 18 ))
         right_frame.place(x=45, y=440, width=1227, height=400)
@@ -183,6 +182,7 @@ class AddEmployee:
         
         showAll_btn=Button(search_frame, text="Show All",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
         showAll_btn.grid(row=0,column=5)
+        
         #table frame
         table_frame = Frame(right_frame,bd=2, bg= "white" ,relief=RIDGE )
         table_frame.place(x=10, y=100, width=1200, height=250)
