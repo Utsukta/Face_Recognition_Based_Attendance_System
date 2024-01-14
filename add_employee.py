@@ -24,7 +24,7 @@ class AddEmployee:
         self.var_Emergency_contact=StringVar()
         self.var_education=StringVar()
         self.var_radio1=StringVar()
-        self.var_radio2=StringVar()
+ 
         
         #Background Image
         img = Image.open("../Face_recogniton_system/Images/splash-bg.png")
@@ -115,11 +115,11 @@ class AddEmployee:
         education_entry.grid(row=9, column=1, padx=10, pady=15, sticky=tk.W)
 
         #radio_buttons1
-        radiobtn1=Radiobutton(left_frame,textvariable=self.var_radio1,text="Take Photos", font=(Constants.Add_Employee_font ,15),value="yes",bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        radiobtn1=Radiobutton(left_frame,variable=self.var_radio1,text="Take Photos", font=(Constants.Add_Employee_font ,15),value="yes",bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         radiobtn1.grid(row=10,column=0)
 
         #radio_buttons2
-        radiobtn2=Radiobutton(left_frame,textvariable=self.var_radio2,text="No Photos",font=(Constants.Add_Employee_font ,15), value="no",bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        radiobtn2=Radiobutton(left_frame,variable=self.var_radio1,text="No Photos",font=(Constants.Add_Employee_font ,15), value="no",bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         radiobtn2.grid(row=10,column=1)
 
         #button_frame
@@ -242,9 +242,10 @@ class AddEmployee:
         if self.var_department.get()=="Select Derpartment" or self.var_address.get()=="" or self.var_email.get()=="" or self.var_education.get()=="" or self.var_gender.get()=="Select Gender" or self.var_joined_date=="" or self.var_phone_number==""or self.var_Emergency_contact=="" or self.var_salary=="":
            messagebox.showerror("Error","All fields are required",parent=self.root)
         else:
-            conn=mysql.connector.connect(host="localhost",username="root",password="",database="face_recognizer")
-            my_cursor=conn.cursor()
-            my_cursor.execute("insert into employee values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(
+            try:
+                conn=mysql.connector.connect(host="localhost",username="root",password="",database="face_recognizer")
+                my_cursor=conn.cursor()
+                my_cursor.execute("insert into employee values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(
                 self.var_department.get(),
                 self.var_name.get(),
                 self.var_phone_number.get(),
@@ -254,9 +255,16 @@ class AddEmployee:
                 self.var_joined_date.get(),
                 self.var_salary.get(),
                 self.var_Emergency_contact.get(),
-                self.var_education.get(),))
+                self.var_education.get(),
+                self.var_radio1.get()))
+                conn.commit()
+                conn.close()
+                messagebox.showinfo("Success","All details added",parent=self.root)
+            except Exception as e:
+                messagebox.showerror("Error",str(e), parent=self.root)
 
       
+            
 if __name__ == "__main__":
     root = tk.Tk()
     AddEmployee_obj = AddEmployee(root)
