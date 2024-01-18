@@ -267,7 +267,7 @@ class AddEmployee:
 
     #================fetch data===============#
     def fetch_data(self):
-     conn=mysql.connector.connect(host="localhost",username="root",password="SANCHITA@123",database="face_recognizer")
+     conn=mysql.connector.connect(host="localhost",username="root",password="",database="face_recognizer")
      my_cursor=conn.cursor()
      my_cursor.execute("select * from employee")
      data=my_cursor.fetchall()
