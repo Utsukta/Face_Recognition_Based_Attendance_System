@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import Button, Label, LabelFrame, Frame, RIDGE, Radiobutton, StringVar, Text, ttk,messagebox
+from tkinter import END, Button, Label, LabelFrame, Frame, RIDGE, Radiobutton, StringVar, Text, ttk,messagebox
 from tkinter import Entry
 from PIL import Image, ImageTk
 from constants import Constants
@@ -264,6 +264,40 @@ class AddEmployee:
                 messagebox.showinfo("Success","All details added",parent=self.root)
             except Exception as e:
                 messagebox.showerror("Error",str(e), parent=self.root)
+
+    #================fetch data===============#
+    def fetch_data(self):
+     conn=mysql.connector.connect(host="localhost",username="root",password="SANCHITA@123",database="face_recognizer")
+     my_cursor=conn.cursor()
+     my_cursor.execute("select * from employee")
+     data=my_cursor.fetchall()
+     
+     if len(data)!=0:
+         self.employee_table.delete(*self.employee_table.get_children())
+         for i in data:
+             self.employee_table.insert("",END, values=i)
+         conn.commit()
+         conn.close()
+         
+     #============get cursor===========#    
+    def get_cursor(self , event=""):
+        cursor_focus=self.employee_table.focus()
+        content=self.employee_table.item(cursor_focus)
+        data=content["values"]
+        
+        self.var_employee_id.set(data[0]),
+        
+        self.var_dep.set(data[1]),
+        self.var_name.set(data[2]),
+        self.var_phone_number.set(data[3]),
+        self.var_address.set(data[4]),
+        self.var_email.set(data[5]),
+        self.var_gender.set(data[6]),
+        self.var_joined_date.set(data[7]),
+        self.var_salary.set(data[8]),
+        self.var_Emergency_contact.set(data[9]),
+        self.var_radio1.set(data[10])
+
 
             
 if __name__ == "__main__":
