@@ -286,7 +286,6 @@ class AddEmployee:
         data=content["values"]
         
         self.var_employee_id.set(data[0]),
-        
         self.var_department.set(data[1]),
         self.var_name.set(data[2]),
         self.var_phone_number.set(data[3]),
