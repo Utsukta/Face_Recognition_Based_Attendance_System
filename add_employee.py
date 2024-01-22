@@ -284,7 +284,6 @@ class AddEmployee:
         cursor_focus=self.employee_table.focus()
         content=self.employee_table.item(cursor_focus)
         data=content["values"]
-        
         self.var_employee_id.set(data[0]),
         self.var_department.set(data[1]),
         self.var_name.set(data[2]),
