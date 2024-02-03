@@ -11,7 +11,6 @@ class Face_Recognition_Attendance_System:
         self.root.maxsize(1440,900)
         self.root.title("Face Recognition system")
 
-
         # Create an instance of the Shared class
         from shared import Shared
         self.shared_instance_main = Shared(self.root)
