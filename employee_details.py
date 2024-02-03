@@ -8,6 +8,7 @@ class Employee_Details:
         # self.root.minsize(1440,900)
         self.root.configure(bg="white")
 
+
         #instance of shared
         # from shared import Shared
         # self.shared=Shared(self.root)
