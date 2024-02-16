@@ -280,6 +280,7 @@ class AddEmployee:
          conn.close()
          
          
+         
      #============get cursor===========#    
     def get_cursor(self , event=""):
         cursor_focus=self.employee_table.focus()
