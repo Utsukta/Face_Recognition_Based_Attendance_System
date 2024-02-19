@@ -90,7 +90,7 @@ class AddEmployee:
         dep_label.grid(row=2, column=0, padx=2, pady=15)
 
         dep_combo = ttk.Combobox(left_frame, textvariable=self.var_department,font=(Constants.Add_Employee_font ,12, "bold"), width=28, state="readonly")
-        dep_combo["values"] = ("select Department", "HR", "IT", "Finance", "Marketing", "Operations")
+        dep_combo["values"] = ("Select Department", "HR", "IT", "Finance", "Marketing", "Operations")
         dep_combo.current(0)
         dep_combo.grid(row=2, column=1, padx=2, pady=15, sticky=tk.W)
 
@@ -152,7 +152,7 @@ class AddEmployee:
         white_space.grid(row=0,column=6)
 
         #reset_button
-        reset_btn=Button(btn_frame, text="Reset",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
+        reset_btn=Button(btn_frame, text="Reset",command=self.reset_data,font=(Constants.Add_Employee_font ,15),highlightthickness=0)
         reset_btn.grid(row=0,column=7)
 
         #WhiteSpace_between_buttons
@@ -237,7 +237,8 @@ class AddEmployee:
         self.employee_table.column("emergency",width=150)
         self.employee_table.column("photo_sample",width=150)
         self.employee_table.pack(fill="both", expand=1)
-
+        
+        #Bind event with get_cursor method
         self.employee_table.bind("<ButtonRelease>",self.get_cursor)
 
         self.fetch_data()
@@ -285,6 +286,10 @@ class AddEmployee:
              self.employee_table.insert("",END, values=i)
          conn.commit()
          conn.close()
+     else:
+          self.employee_table.delete(*self.employee_table.get_children())
+          
+         
          
             
      #============get cursor===========#    
@@ -292,6 +297,22 @@ class AddEmployee:
         cursor_focus=self.employee_table.focus()
         content=self.employee_table.item(cursor_focus)
         data=content["values"]
+        print(data)
+        # if len(data) >= 11:
+
+        #  self.var_employee_id.set(data[0]),
+        #  self.var_department.set(data[1]),
+        #  self.var_name.set(data[2]),
+        #  self.var_phone_number.set(data[3]),
+        #  self.var_address.set(data[4]),
+        #  self.var_email.set(data[5]),
+        #  self.var_gender.set(data[6]),
+        #  self.var_joined_date.set(data[7]), 
+        #  self.var_salary.set(data[8]),
+        #  self.var_Emergency_contact.set(data[9]),
+        #  self.var_radio1.set(data[10])
+
+
         self.var_employee_id.set(data[0]),
         self.var_department.set(data[1]),
         self.var_name.set(data[2]),
@@ -303,6 +324,7 @@ class AddEmployee:
         self.var_salary.set(data[8]),
         self.var_Emergency_contact.set(data[9]),
         self.var_radio1.set(data[10])
+        
 
 
     #--------update function--------------
@@ -352,7 +374,6 @@ class AddEmployee:
             check_val=(self.var_employee_id.get(),)
             my_curser.execute(check_sql,check_val)
             existing_is=my_curser.fetchone()
-            print("here")
 
             if existing_is:
                delete=messagebox.askyesno("Employee Delete Page","Do you want to delete the data?",parent=self.root)
@@ -363,7 +384,10 @@ class AddEmployee:
                  my_curser.execute(delete_sql,delete_val)
                  conn.commit()
                  self.fetch_data()
+                 self.reset_data()
                  messagebox.showinfo("Delete","Employee Details Succesfully Deleted")
+                 
+                 
                  conn.close()
                 
                else:
@@ -372,6 +396,21 @@ class AddEmployee:
             else:
                 messagebox.showerror("ID not found","Employee Id is not available")
            
+
+    #--------reset function------------
+    def reset_data(self):
+        self.var_employee_id.set(""),
+        self.var_department.set("Select Department"),
+        self.var_name.set(""),
+        self.var_phone_number.set(""),
+        self.var_address.set(""),
+        self.var_email.set(""),
+        self.var_gender.set("Select Gender"),
+        self.var_joined_date.set(""), 
+        self.var_salary.set(""),
+        self.var_Emergency_contact.set(""),
+        self.var_radio1.set("")
+        
            
     
 
