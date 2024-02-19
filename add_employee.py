@@ -144,7 +144,7 @@ class AddEmployee:
         white_space.grid(row=0,column=4)
 
         #delete_btn
-        delete_btn=Button(btn_frame, text="Delete",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
+        delete_btn=Button(btn_frame, text="Delete",command=self.delete_data,font=(Constants.Add_Employee_font ,15),highlightthickness=0)
         delete_btn.grid(row=0,column=5)
 
         #WhiteSpace_between_buttons
@@ -159,7 +159,7 @@ class AddEmployee:
         white_space=Label(btn_frame,bg=Constants.content_background_color, width=3)
         white_space.grid(row=0,column=8)
 
-        #delete_btn
+        #Take_Photo_btn
         take_photo_btn=Button(btn_frame, text="Take Photo Samples",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
         take_photo_btn.grid(row=0,column=9)
 
@@ -341,6 +341,25 @@ class AddEmployee:
                 messagebox.showerror("Error",f"Due to:{str(e)}",parent=self.root)
 
 
+    #--------update function--------------
+    def delete_data(self):
+        if self.var_employee_id.get()=="":
+            messagebox.showerror("Error","Employee Id is required",parent=self.root)
+        else:
+            delete=messagebox.askyesno("Employee Delete Page","Do you want to delete the data?",parent=self.root)
+            if delete>0:
+                conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
+                my_curser=conn.cursor()
+                sql="DELETE FROM employee WHERE employee_id=%s"
+                val=(self.var_employee_id.get(),)
+                my_curser.execute(sql,val)
+            else:
+                if not delete:
+                    return
+            conn.commit()
+            self.fetch_data()
+            conn.close()
+            messagebox.showinfo("Delete","Employee Details Succesfully Deleted")
 
             
 if __name__ == "__main__":
