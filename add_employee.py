@@ -237,6 +237,8 @@ class AddEmployee:
         self.employee_table.column("photo_sample",width=150)
         self.employee_table.pack(fill="both", expand=1)
 
+        self.fetch_data()
+
 
     #------------function declaration-----------------
     def add_data(self):
@@ -260,6 +262,7 @@ class AddEmployee:
                 self.var_radio1.get()
                 ))
                 conn.commit()
+                self.fetch_data()
                 conn.close()
                 messagebox.showinfo("Success","All details added",parent=self.root)
             except Exception as e:
@@ -267,7 +270,7 @@ class AddEmployee:
 
     #================fetch data===============#
     def fetch_data(self):
-     conn=mysql.connector.connect(host="localhost",username="root",password="",database="face_recognizer")
+     conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
      my_cursor=conn.cursor()
      my_cursor.execute("select * from employee")
      data=my_cursor.fetchall()
