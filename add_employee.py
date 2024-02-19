@@ -235,7 +235,6 @@ class AddEmployee:
         self.employee_table.column("salary",width=200)
         self.employee_table.column("emergency",width=150)
         self.employee_table.column("photo_sample",width=150)
-        
         self.employee_table.pack(fill="both", expand=1)
 
 
@@ -245,7 +244,7 @@ class AddEmployee:
            messagebox.showerror("Error","All fields are required",parent=self.root)
         else:
             try:
-                conn=mysql.connector.connect(host="localhost",username="root",password="",database="face_recognizer")
+                conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
                 my_cursor=conn.cursor()
                 my_cursor.execute("insert into employee values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(
                 self.var_employee_id.get(),
@@ -258,7 +257,8 @@ class AddEmployee:
                 self.var_joined_date.get(),
                 self.var_salary.get(),
                 self.var_Emergency_contact.get(),
-                self.var_radio1.get()))
+                self.var_radio1.get()
+                ))
                 conn.commit()
                 conn.close()
                 messagebox.showinfo("Success","All details added",parent=self.root)
