@@ -72,6 +72,7 @@ class AddEmployee:
         # Gender
         gender_label = Label(left_frame, text="Gender", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         gender_label.grid(row=1, column=2, padx=10, pady=15)
+
         gender_combo = ttk.Combobox(left_frame,textvariable=self.var_gender, font=(Constants.Add_Employee_font , 12, "bold"), width=28, state="readonly")
         gender_combo["values"] = ("Select Gender" ,"Male", "Female","Other")
         gender_combo.current(0)
@@ -135,7 +136,7 @@ class AddEmployee:
         white_space.grid(row=0,column=2)
 
         #update_button
-        update_btn=Button(btn_frame, text="Update",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
+        update_btn=Button(btn_frame, text="Update",command=self.update_data,font=(Constants.Add_Employee_font ,15),highlightthickness=0)
         update_btn.grid(row=0,column=3)
 
         #WhiteSpace_between_buttons
@@ -150,7 +151,7 @@ class AddEmployee:
         white_space=Label(btn_frame,bg=Constants.content_background_color, width=3)
         white_space.grid(row=0,column=6)
 
-        #update_button
+        #reset_button
         reset_btn=Button(btn_frame, text="Reset",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
         reset_btn.grid(row=0,column=7)
 
@@ -158,17 +159,17 @@ class AddEmployee:
         white_space=Label(btn_frame,bg=Constants.content_background_color, width=3)
         white_space.grid(row=0,column=8)
 
-         #delete_btn
-        delete_btn=Button(btn_frame, text="Take Photo Samples",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
-        delete_btn.grid(row=0,column=9)
+        #delete_btn
+        take_photo_btn=Button(btn_frame, text="Take Photo Samples",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
+        take_photo_btn.grid(row=0,column=9)
 
         #WhiteSpace_between_buttons
         white_space=Label(btn_frame,bg=Constants.content_background_color, width=3)
         white_space.grid(row=0,column=10)
 
         #update_button
-        reset_btn=Button(btn_frame, text="Update Photo Samples",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
-        reset_btn.grid(row=0,column=11)
+        update_photo_btn=Button(btn_frame, text="Update Photo Samples",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
+        update_photo_btn.grid(row=0,column=11)
 
         #Right Frame
         right_frame = LabelFrame(bg_img,bd=10,bg=Constants.content_background_color,fg=Constants.frame_content_text_color,text="Employee Details",relief=RIDGE, font=("times new roman", 18 ))
@@ -237,6 +238,8 @@ class AddEmployee:
         self.employee_table.column("photo_sample",width=150)
         self.employee_table.pack(fill="both", expand=1)
 
+        self.employee_table.bind("<ButtonRelease>",self.get_cursor)
+
         self.fetch_data()
 
 
@@ -283,8 +286,7 @@ class AddEmployee:
          conn.commit()
          conn.close()
          
-         
-         
+            
      #============get cursor===========#    
     def get_cursor(self , event=""):
         cursor_focus=self.employee_table.focus()
@@ -297,10 +299,50 @@ class AddEmployee:
         self.var_address.set(data[4]),
         self.var_email.set(data[5]),
         self.var_gender.set(data[6]),
-        self.var_joined_date.set(data[7]),
+        self.var_joined_date.set(data[7]), 
         self.var_salary.set(data[8]),
         self.var_Emergency_contact.set(data[9]),
         self.var_radio1.set(data[10])
+
+
+    #--------update function--------------
+    def update_data(self):
+        if self.var_department.get()=="Select Department" or self.var_address.get()=="" or self.var_email.get()=="" or self.var_employee_id.get()=="" or self.var_gender.get()=="Select Gender" or self.var_joined_date.get()=="" or self.var_phone_number.get()==""or self.var_Emergency_contact.get()=="" or self.var_salary.get()=="":
+           messagebox.showerror("Error","All fields are required",parent=self.root)
+        else:
+            try:
+                Update=messagebox.askyesno("Update","Do you want to update this student details",parent=self.root)
+                if Update>0:
+                    conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
+                    my_curser=conn.cursor()
+                    my_curser.execute("Update employee set department=%s,Name=%s,Phone=%s,address=%s,email=%s,gender=%s,joined=%s,salary=%s,emergency_contact=%s,Photo_sample=%s where employee_id=%s",(
+                        
+                        self.var_department.get(),
+                        self.var_name.get(),
+                        self.var_phone_number.get(),
+                        self.var_address.get(),
+                        self.var_email.get(),
+                        self.var_gender.get(),
+                        self.var_joined_date.get(),
+                        self.var_salary.get(),
+                        self.var_Emergency_contact.get(),
+                        self.var_radio1.get(),
+                        self.var_employee_id.get(),
+                        
+
+                    ))
+                else:
+                    if not Update:
+                        return 
+                messagebox.showinfo("Success","Student details successfully update completed",parent=self.root)
+                conn.commit()
+                self.fetch_data()
+                conn.close()
+            except Exception as e:
+                messagebox.showerror("Error",f"Due to:{str(e)}",parent=self.root)
+
+            
+
 
 
             
