@@ -275,6 +275,7 @@ class AddEmployee:
      my_cursor.execute("select * from employee")
      data=my_cursor.fetchall()
      
+     #if the data contains rows in it
      if len(data)!=0:
          self.employee_table.delete(*self.employee_table.get_children())
          for i in data:
