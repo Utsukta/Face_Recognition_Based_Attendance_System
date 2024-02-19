@@ -292,6 +292,7 @@ class AddEmployee:
         cursor_focus=self.employee_table.focus()
         content=self.employee_table.item(cursor_focus)
         data=content["values"]
+        
         self.var_employee_id.set(data[0]),
         self.var_department.set(data[1]),
         self.var_name.set(data[2]),
@@ -328,20 +329,18 @@ class AddEmployee:
                         self.var_Emergency_contact.get(),
                         self.var_radio1.get(),
                         self.var_employee_id.get(),
-                        
 
                     ))
                 else:
                     if not Update:
                         return 
                 messagebox.showinfo("Success","Student details successfully update completed",parent=self.root)
-                conn.commit()
+                
                 self.fetch_data()
+                conn.commit()
                 conn.close()
             except Exception as e:
                 messagebox.showerror("Error",f"Due to:{str(e)}",parent=self.root)
-
-            
 
 
 
