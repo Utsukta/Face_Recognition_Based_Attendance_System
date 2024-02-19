@@ -341,25 +341,39 @@ class AddEmployee:
                 messagebox.showerror("Error",f"Due to:{str(e)}",parent=self.root)
 
 
-    #--------update function--------------
+    #--------delete function--------------
     def delete_data(self):
         if self.var_employee_id.get()=="":
             messagebox.showerror("Error","Employee Id is required",parent=self.root)
         else:
-            delete=messagebox.askyesno("Employee Delete Page","Do you want to delete the data?",parent=self.root)
-            if delete>0:
-                conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
-                my_curser=conn.cursor()
-                sql="DELETE FROM employee WHERE employee_id=%s"
-                val=(self.var_employee_id.get(),)
-                my_curser.execute(sql,val)
-            else:
+            conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
+            my_curser=conn.cursor()
+            check_sql="SELECT employee_id FROM employee WHERE employee_id=%s"
+            check_val=(self.var_employee_id.get(),)
+            my_curser.execute(check_sql,check_val)
+            existing_is=my_curser.fetchone()
+            print("here")
+
+            if existing_is:
+               delete=messagebox.askyesno("Employee Delete Page","Do you want to delete the data?",parent=self.root)
+               if delete>0:
+
+                 delete_sql="DELETE FROM employee WHERE employee_id=%s"
+                 delete_val=(self.var_employee_id.get(),)
+                 my_curser.execute(delete_sql,delete_val)
+                 conn.commit()
+                 self.fetch_data()
+                 messagebox.showinfo("Delete","Employee Details Succesfully Deleted")
+                 conn.close()
+                
+               else:
                 if not delete:
                     return
-            conn.commit()
-            self.fetch_data()
-            conn.close()
-            messagebox.showinfo("Delete","Employee Details Succesfully Deleted")
+            else:
+                messagebox.showerror("ID not found","Employee Id is not available")
+           
+           
+    
 
             
 if __name__ == "__main__":
