@@ -336,8 +336,8 @@ class AddEmployee:
                 if Update>0:
                     conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
                     my_curser=conn.cursor()
-                    my_curser.execute("Update employee set employee_id=%s,department=%s,Name=%s,Phone=%s,address=%s,email=%s,gender=%s,joined=%s,salary=%s,emergency_contact=%s,Photo_sample=%s where employee_id=%s",(
-                        self.var_employee_id.get(),
+                    my_curser.execute("Update employee set department=%s,Name=%s,Phone=%s,address=%s,email=%s,gender=%s,joined=%s,salary=%s,emergency_contact=%s,Photo_sample=%s where employee_id=%s",(
+                        
                         self.var_department.get(),
                         self.var_name.get(),
                         self.var_phone_number.get(),
