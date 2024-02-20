@@ -4,6 +4,7 @@ from tkinter import Entry
 from PIL import Image, ImageTk
 from constants import Constants
 import mysql.connector
+import cv2
 
 class AddEmployee:
     def __init__(self, root):
