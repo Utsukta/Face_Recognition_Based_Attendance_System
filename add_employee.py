@@ -284,12 +284,11 @@ class AddEmployee:
          self.employee_table.delete(*self.employee_table.get_children())
          for i in data:
              self.employee_table.insert("",END, values=i)
-         conn.commit()
-         conn.close()
+         
      else:
           self.employee_table.delete(*self.employee_table.get_children())
-          
-         
+     conn.close()
+
          
             
      #============get cursor===========#    
@@ -337,8 +336,8 @@ class AddEmployee:
                 if Update>0:
                     conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
                     my_curser=conn.cursor()
-                    my_curser.execute("Update employee set department=%s,Name=%s,Phone=%s,address=%s,email=%s,gender=%s,joined=%s,salary=%s,emergency_contact=%s,Photo_sample=%s where employee_id=%s",(
-                        
+                    my_curser.execute("Update employee set employee_id=%s,department=%s,Name=%s,Phone=%s,address=%s,email=%s,gender=%s,joined=%s,salary=%s,emergency_contact=%s,Photo_sample=%s where employee_id=%s",(
+                        self.var_employee_id.get(),
                         self.var_department.get(),
                         self.var_name.get(),
                         self.var_phone_number.get(),
@@ -356,8 +355,9 @@ class AddEmployee:
                     if not Update:
                         return 
                 messagebox.showinfo("Success","Student details successfully update completed",parent=self.root)
-                self.fetch_data()
                 conn.commit()
+                self.fetch_data()
+                
                 conn.close()
             except Exception as e:
                 messagebox.showerror("Error",f"Due to:{str(e)}",parent=self.root)
