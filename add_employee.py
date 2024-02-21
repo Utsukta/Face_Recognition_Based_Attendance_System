@@ -117,7 +117,7 @@ class AddEmployee:
         education_entry.grid(row=9, column=1, padx=10, pady=15, sticky=tk.W)
 
         #radio_buttons1
-        radiobtn1=Radiobutton(left_frame,variable=self.var_radio1,text="Take Photos", command=self.generate_dataset, font=(Constants.Add_Employee_font ,15),value="yes",bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        radiobtn1=Radiobutton(left_frame,variable=self.var_radio1,text="Take Photos",font=(Constants.Add_Employee_font ,15),value="yes",bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         radiobtn1.grid(row=10,column=0)
 
         #radio_buttons2
@@ -161,8 +161,8 @@ class AddEmployee:
         white_space.grid(row=0,column=8)
 
         #Take_Photo_btn
-        take_photo_btn=Button(btn_frame, text="Take Photo Samples",command=self.generate_dataset,font=(Constants.Add_Employee_font ,15),highlightthickness=0)
-        take_photo_btn.grid(row=0,column=9)
+        add_photo_btn=Button(btn_frame, text="Add Photo Samples",command=self.generate_dataset,font=(Constants.Add_Employee_font ,15),highlightthickness=0)
+        add_photo_btn.grid(row=0,column=9)
 
         #WhiteSpace_between_buttons
         white_space=Label(btn_frame,bg=Constants.content_background_color, width=3)
@@ -355,7 +355,7 @@ class AddEmployee:
                 else:
                     if not Update:
                         return 
-                messagebox.showinfo("Success","Student details successfully update completed",parent=self.root)
+                messagebox.showinfo("Success","Employee details successfully update completed",parent=self.root)
                 conn.commit()
                 self.fetch_data()
                 
@@ -442,8 +442,11 @@ class AddEmployee:
 
                     ))
                 conn.commit()
-                self.fetch_data()
-                self.reset_data()
+                # self.update_data()
+                # self.fetch_data()
+
+                # self.reset_data()
+                
                 conn.close()
 
 
@@ -480,6 +483,10 @@ class AddEmployee:
                 cap.release()
                 cv2.destroyAllWindows()
                 messagebox.showinfo("Result","Generating datasets Completed")
+                self.update_data()
+                self.fetch_data()
+
+                self.reset_data()
 
                      
                      
