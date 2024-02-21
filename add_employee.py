@@ -298,32 +298,32 @@ class AddEmployee:
         content=self.employee_table.item(cursor_focus)
         data=content["values"]
         print(data)
-        # if len(data) >= 11:
+        if len(data) >= 11:
 
-        #  self.var_employee_id.set(data[0]),
-        #  self.var_department.set(data[1]),
-        #  self.var_name.set(data[2]),
-        #  self.var_phone_number.set(data[3]),
-        #  self.var_address.set(data[4]),
-        #  self.var_email.set(data[5]),
-        #  self.var_gender.set(data[6]),
-        #  self.var_joined_date.set(data[7]), 
-        #  self.var_salary.set(data[8]),
-        #  self.var_Emergency_contact.set(data[9]),
-        #  self.var_radio1.set(data[10])
+         self.var_employee_id.set(data[0]),
+         self.var_department.set(data[1]),
+         self.var_name.set(data[2]),
+         self.var_phone_number.set(data[3]),
+         self.var_address.set(data[4]),
+         self.var_email.set(data[5]),
+         self.var_gender.set(data[6]),
+         self.var_joined_date.set(data[7]), 
+         self.var_salary.set(data[8]),
+         self.var_Emergency_contact.set(data[9]),
+         self.var_radio1.set(data[10])
 
 
-        self.var_employee_id.set(data[0]),
-        self.var_department.set(data[1]),
-        self.var_name.set(data[2]),
-        self.var_phone_number.set(data[3]),
-        self.var_address.set(data[4]),
-        self.var_email.set(data[5]),
-        self.var_gender.set(data[6]),
-        self.var_joined_date.set(data[7]), 
-        self.var_salary.set(data[8]),
-        self.var_Emergency_contact.set(data[9]),
-        self.var_radio1.set(data[10])
+        # self.var_employee_id.set(data[0]),
+        # self.var_department.set(data[1]),
+        # self.var_name.set(data[2]),
+        # self.var_phone_number.set(data[3]),
+        # self.var_address.set(data[4]),
+        # self.var_email.set(data[5]),
+        # self.var_gender.set(data[6]),
+        # self.var_joined_date.set(data[7]), 
+        # self.var_salary.set(data[8]),
+        # self.var_Emergency_contact.set(data[9]),
+        # self.var_radio1.set(data[10])
         
 
 
@@ -387,8 +387,6 @@ class AddEmployee:
                  self.fetch_data()
                  self.reset_data()
                  messagebox.showinfo("Delete","Employee Details Succesfully Deleted")
-                 
-                 
                  conn.close()
                 
                else:
