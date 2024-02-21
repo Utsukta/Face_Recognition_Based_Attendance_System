@@ -117,7 +117,7 @@ class AddEmployee:
         education_entry.grid(row=9, column=1, padx=10, pady=15, sticky=tk.W)
 
         #radio_buttons1
-        radiobtn1=Radiobutton(left_frame,variable=self.var_radio1,text="Take Photos", font=(Constants.Add_Employee_font ,15),value="yes",bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        radiobtn1=Radiobutton(left_frame,variable=self.var_radio1,text="Take Photos", command=self.generate_dataset, font=(Constants.Add_Employee_font ,15),value="yes",bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         radiobtn1.grid(row=10,column=0)
 
         #radio_buttons2
@@ -161,7 +161,7 @@ class AddEmployee:
         white_space.grid(row=0,column=8)
 
         #Take_Photo_btn
-        take_photo_btn=Button(btn_frame, text="Take Photo Samples",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
+        take_photo_btn=Button(btn_frame, text="Take Photo Samples",command=self.generate_dataset,font=(Constants.Add_Employee_font ,15),highlightthickness=0)
         take_photo_btn.grid(row=0,column=9)
 
         #WhiteSpace_between_buttons
@@ -411,7 +411,9 @@ class AddEmployee:
         self.var_radio1.set("")
         
 
+
     #-----------generate data or take photo sample------------
+    #Capturing images and updating database
     def generate_dataset(self):
         if self.var_department.get()=="Select Department" or self.var_address.get()=="" or self.var_email.get()=="" or self.var_employee_id.get()=="" or self.var_gender.get()=="Select Gender" or self.var_joined_date.get()=="" or self.var_phone_number.get()==""or self.var_Emergency_contact.get()=="" or self.var_salary.get()=="":
            messagebox.showerror("Error","All fields are required",parent=self.root)
@@ -436,7 +438,7 @@ class AddEmployee:
                         self.var_salary.get(),
                         self.var_Emergency_contact.get(),
                         self.var_radio1.get(),
-                        self.var_employee_id.get(),
+                        self.var_employee_id.get()==id+1,
 
                     ))
                      conn.commit()
@@ -444,9 +446,45 @@ class AddEmployee:
                      self.reset_data()
                      conn.close()
 
+
+                    #----------load predefined data on face frontals from opencv---------
+                     face_classifer=cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+
+                     def face_cropped(img):
+                         gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+                         faces=face_classifer.detectMultiScale(gray,1.3,5)
+                         #scaling_factor=1.3
+                         #minimum neighbour=5
+
+                         for(x,y,w,h) in faces:
+                             face_cropped=img[y:y+h,x:x+w]
+                             return face_cropped
+                         
+                     cap=cv2.VideoCapture(0)
+                     img_id=0
+                     while True:
+                        ret,my_frame=cap.read()
+                        if face_cropped(my_frame) is not None:
+                            img_id+=1
+                            face=cv2.resize(face_cropped(my_frame),(450,450))
+                            face=cv2.cvtColor(face,cv2.COLOR_BGR2GRAY)
+                            file_name_path="data/user."+str(id)+"."+str(img_id)+".jpg"
+                            cv2.imwrite(file_name_path,face)
+                            cv2.putText(face,str(img_id),(50,50),cv2.FONT_HERSHEY_SIMPLEX,2,(0,255,0),2)
+                            cv2.imshow("Cropped face",face)
+
+
+                        #Enter gare paxi close garni
+                        if cv2.waitKey(1)==13 or int(img_id)==100:
+                            break
+                     cap.release()
+                     cv2.destroyAllWindows()
+                     messagebox.showinfo("Result","Generating datasets Completed")
+
+                     
                      
             except Exception as e:
-                 print(e)
+                messagebox.showerror("Error",f"Due to:{str(e)}",parent=self.root)
         
            
     
