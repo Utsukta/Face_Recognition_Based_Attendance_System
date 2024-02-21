@@ -419,14 +419,14 @@ class AddEmployee:
            messagebox.showerror("Error","All fields are required",parent=self.root)
         else:
             try:
-                 conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
-                 my_curser=conn.cursor()
-                 my_curser.execute("SELECT * FROM employee")
-                 my_result=my_curser.fetchall()
-                 id=0
-                 for x in my_result:
+                conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
+                my_curser=conn.cursor()
+                my_curser.execute("SELECT * FROM employee")
+                my_result=my_curser.fetchall()
+                id=0
+                for x in my_result:
                      id+=1
-                     my_curser.execute("Update employee set department=%s,Name=%s,Phone=%s,address=%s,email=%s,gender=%s,joined=%s,salary=%s,emergency_contact=%s,Photo_sample=%s where employee_id=%s",(
+                my_curser.execute("Update employee set department=%s,Name=%s,Phone=%s,address=%s,email=%s,gender=%s,joined=%s,salary=%s,emergency_contact=%s,Photo_sample=%s where employee_id=%s",(
                         
                         self.var_department.get(),
                         self.var_name.get(),
@@ -441,16 +441,16 @@ class AddEmployee:
                         self.var_employee_id.get()==id+1,
 
                     ))
-                     conn.commit()
-                     self.fetch_data()
-                     self.reset_data()
-                     conn.close()
+                conn.commit()
+                self.fetch_data()
+                self.reset_data()
+                conn.close()
 
 
                     #----------load predefined data on face frontals from opencv---------
-                     face_classifer=cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+                face_classifer=cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 
-                     def face_cropped(img):
+                def face_cropped(img):
                          gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
                          faces=face_classifer.detectMultiScale(gray,1.3,5)
                          #scaling_factor=1.3
@@ -460,9 +460,9 @@ class AddEmployee:
                              face_cropped=img[y:y+h,x:x+w]
                              return face_cropped
                          
-                     cap=cv2.VideoCapture(0)
-                     img_id=0
-                     while True:
+                cap=cv2.VideoCapture(0)
+                img_id=0
+                while True:
                         ret,my_frame=cap.read()
                         if face_cropped(my_frame) is not None:
                             img_id+=1
@@ -477,9 +477,9 @@ class AddEmployee:
                         #Enter gare paxi close garni
                         if cv2.waitKey(1)==13 or int(img_id)==100:
                             break
-                     cap.release()
-                     cv2.destroyAllWindows()
-                     messagebox.showinfo("Result","Generating datasets Completed")
+                cap.release()
+                cv2.destroyAllWindows()
+                messagebox.showinfo("Result","Generating datasets Completed")
 
                      
                      
