@@ -438,7 +438,7 @@ class AddEmployee:
                         self.var_salary.get(),
                         self.var_Emergency_contact.get(),
                         self.var_radio1.get(),
-                        self.var_employee_id.get()==id+1,
+                        self.var_employee_id.get(),
 
                     ))
                 conn.commit()
@@ -483,7 +483,7 @@ class AddEmployee:
                 cap.release()
                 cv2.destroyAllWindows()
                 messagebox.showinfo("Result","Generating datasets Completed")
-                self.update_data()
+                # self.update_data()
                 self.fetch_data()
 
                 self.reset_data()
