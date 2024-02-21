@@ -412,6 +412,44 @@ class AddEmployee:
         self.var_Emergency_contact.set(""),
         self.var_radio1.set("")
         
+
+    #-----------generate data or take photo sample------------
+    def generate_dataset(self):
+        if self.var_department.get()=="Select Department" or self.var_address.get()=="" or self.var_email.get()=="" or self.var_employee_id.get()=="" or self.var_gender.get()=="Select Gender" or self.var_joined_date.get()=="" or self.var_phone_number.get()==""or self.var_Emergency_contact.get()=="" or self.var_salary.get()=="":
+           messagebox.showerror("Error","All fields are required",parent=self.root)
+        else:
+            try:
+                 conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
+                 my_curser=conn.cursor()
+                 my_curser.execute("SELECT * FROM employee")
+                 my_result=my_curser.fetchall()
+                 id=0
+                 for x in my_result:
+                     id+=1
+                     my_curser.execute("Update employee set department=%s,Name=%s,Phone=%s,address=%s,email=%s,gender=%s,joined=%s,salary=%s,emergency_contact=%s,Photo_sample=%s where employee_id=%s",(
+                        
+                        self.var_department.get(),
+                        self.var_name.get(),
+                        self.var_phone_number.get(),
+                        self.var_address.get(),
+                        self.var_email.get(),
+                        self.var_gender.get(),
+                        self.var_joined_date.get(),
+                        self.var_salary.get(),
+                        self.var_Emergency_contact.get(),
+                        self.var_radio1.get(),
+                        self.var_employee_id.get(),
+
+                    ))
+                     conn.commit()
+                     self.fetch_data()
+                     self.reset_data()
+                     conn.close()
+
+                     
+            except Exception as e:
+                 print(e)
+        
            
     
 
