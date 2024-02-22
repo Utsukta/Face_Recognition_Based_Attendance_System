@@ -4,6 +4,7 @@ from constants import Constants
 from add_employee import AddEmployee 
 from employee_details import Employee_Details
 from main import Face_Recognition_Attendance_System
+from photos import Photos
 
 # from employee_details import Employee_Details
 
@@ -78,6 +79,8 @@ class Shared:
             # self.root.withdraw()
             print("clicked details") 
     def on_photos_label_clicked(self,event):
+            self.app=Photos(self.root)
+            
             print("clicked photos")
     def on_train_data_label_clicked(self,event):
             print("clicked train data")
