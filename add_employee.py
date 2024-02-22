@@ -411,7 +411,6 @@ class AddEmployee:
         self.var_radio1.set("")
         
 
-
     #-----------generate data or take photo sample------------
     #Capturing images and updating database
     def generate_dataset(self):
