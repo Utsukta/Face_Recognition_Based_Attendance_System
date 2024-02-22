@@ -35,10 +35,13 @@ class Photos:
 
 
     def open_img(self):
+        folder_path = os.path.join(os.getcwd(), "data") # Assuming "data" folder is in the same directory as the script
+        if os.path.exists(folder_path):
+            os.system(f'open "{folder_path}"') 
+        else:
+            print("Error: Folder not found.")
       
-        folder_path = os.path.join(os.getcwd(), "data")  # Assuming "data" folder is in the same directory as the script
-        os.system(f'open "{folder_path}"') 
-      
+
 
 if __name__ == "__main__":
     root = tk.Tk()
