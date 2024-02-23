@@ -5,6 +5,7 @@ from add_employee import AddEmployee
 from employee_details import Employee_Details
 from main import Face_Recognition_Attendance_System
 from photos import Photos
+from train import Train
 
 # from employee_details import Employee_Details
 
@@ -83,6 +84,7 @@ class Shared:
             
             print("clicked photos")
     def on_train_data_label_clicked(self,event):
+            self.app=Train(self.root)
             print("clicked train data")
     def on_face_recognition_label_clicked(self,event):
             print("clicked face recognition")
