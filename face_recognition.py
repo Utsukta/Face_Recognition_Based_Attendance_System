@@ -28,31 +28,40 @@ class Facerecognition:
         btn_frame.place(x=700, y=270, width=150, height=25)
 
         #save_button
-        save_btn=Button(btn_frame, text="Face Detector",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
+        save_btn=Button(btn_frame, text="Face Detector",command=self.face_recognizer,font=(Constants.Add_Employee_font ,15),highlightthickness=0)
         save_btn.grid(row=0,column=1)
+        
 
     def face_recognizer(self):
         def draw_boundary(img,classifier,scaleFactor,minNeighbors,color,text,clf):
-            gray_image=cv2.cvtColor(img,cv2.COLOR_BAYER_BGGR2GRAY)
+            gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             features=classifier.detectMultiScale(gray_image,scaleFactor,minNeighbors)
 
-            coord=[]
 
-            for  x,y,w,h in features:
-                cv2.rectangle(img(x,y),(x+w,y+h),(0,255,0),3)
-                id,predict=clf.predict(gray_image[y:y + h, x:x + w])
-                # confidence=int((100*(1-predict/300)))
-                confidence=(float("%.2f" %(id)))
+            coord=[]
+            
+            #Coordinates to draw the rectangle
+
+            for  (x,y,w,h) in features:
+                cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 3)
+
+                id,predict=clf.predict(gray_image[y:y+h, x:x+w])
+                confidence=int((100*(1-predict/300)))
+                # confidence=(float("%.2f" %(id)))
 
                 conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
                 my_cursor=conn.cursor()
                 my_cursor.execute("SELECT Name from employee WHERE employee_id="+str((id)))
                 n=my_cursor.fetchone()
-                n="+".join(n)
+                # n="+".join(n)
+                n = "+".join([str(n)])
+                print(n)
+
 
                 my_cursor.execute("SELECT department from employee WHERE employee_id="+str((id)))
                 d=my_cursor.fetchone()
-                d="+".join(d)
+                # d="+".join(d)
+                d = "+".join([str(d)])
 
 
 
@@ -60,18 +69,19 @@ class Facerecognition:
                     cv2.putText(img,f"Name:{n}",(x,y-55),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
                     cv2.putText(img,f"department:{d}",(x,y-30),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
                 else:
-                    cv2.rectangle(img(x,y),(x+w,y+h),(0,0,255),3)
+                    cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,255),3)
                     cv2.putText(img,"Unknown Face",(x,y-5),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
 
                 coord=[x,y,w,h]
+
             return coord
         
 
         def recognize(img,clf,faceCascade):
-            coord=draw_boundary(img,faceCascade,1,1,10,(255,255,255),"Face",clf)
+            coord=draw_boundary(img,faceCascade,1.1,10,(255,255,255),"Face",clf)
             return img
         
-        faceCascade=cv2.CascadeClassifier("haarcascade_profileface_default.xml")
+        faceCascade=cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
         clf=cv2.face.LBPHFaceRecognizer_create()
         clf.read("classifier.xml")
 
@@ -81,10 +91,10 @@ class Facerecognition:
             ret,img=video_capture.read()
             img=recognize(img,clf,faceCascade)
             cv2.imshow("Welcome to face Reconition",img)
-            if cv2.waitKey(13):
+            if cv2.waitKey(1)==13:
                 break
-            video_capture.release()
-            cv2.destroyAllWindows()
+        video_capture.release()
+        cv2.destroyAllWindows()
 
 if __name__ == "__main__":
     root = tk.Tk()
