@@ -3,6 +3,7 @@ from PIL import Image, ImageTk
 from constants import Constants
 from add_employee import AddEmployee 
 from employee_details import Employee_Details
+from face_recognition import Facerecognition
 from main import Face_Recognition_Attendance_System
 from photos import Photos
 from train import Train
@@ -87,6 +88,7 @@ class Shared:
             self.app=Train(self.root)
             print("clicked train data")
     def on_face_recognition_label_clicked(self,event):
+            self.app=Facerecognition(self.root)
             print("clicked face recognition")
     def on_attendance_label_clicked(self,event):
             print("clicked attendance")   
