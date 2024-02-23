@@ -30,8 +30,21 @@ class Train:
         btn_frame.place(x=700, y=270, width=150, height=25)
 
         #save_button
-        save_btn=Button(btn_frame, text="Train Data",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
+        save_btn=Button(btn_frame, text="Train Data",command=self.train_classifier,font=(Constants.Add_Employee_font ,15),highlightthickness=0)
         save_btn.grid(row=0,column=1)
+
+    def train_classifier(self):
+        data_dir=("data")
+        #list comprehension
+        path=[os.path.join(data_dir,file) for file in os.listdir(data_dir)]
+        
+        faces=[]
+        ids=[]
+
+        for image in path:
+            #Converts in grey scale image
+            img=Image.open(image).convert("L")
+
 
 if __name__ == "__main__":
     root = tk.Tk()
