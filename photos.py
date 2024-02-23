@@ -1,12 +1,9 @@
 import os
 import tkinter as tk
 from tkinter import END, Button, Label, LabelFrame, Frame, RIDGE, Radiobutton, StringVar, Text, ttk,messagebox
-from tkinter import Entry
-import webbrowser
 from PIL import Image, ImageTk
 from constants import Constants
-import mysql.connector
-import cv2
+
 
 class Photos:
     def __init__(self, root):
