@@ -33,10 +33,6 @@ class Train:
         save_btn=Button(btn_frame, text="Train Data",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
         save_btn.grid(row=0,column=1)
 
-
-      
-
-
 if __name__ == "__main__":
     root = tk.Tk()
     Train_obj = Train(root)
