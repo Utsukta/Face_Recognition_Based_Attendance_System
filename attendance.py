@@ -1,11 +1,16 @@
+import csv
 import tkinter as tk
 from tkinter import END, Button, Label, LabelFrame, Frame, RIDGE, Radiobutton, StringVar, Text, ttk,messagebox
 from tkinter import Entry
+from tkinter import filedialog
 from PIL import Image, ImageTk
 from constants import Constants
 import mysql.connector
 import cv2
+import os
 
+
+my_data=[]
 class Attendance:
     def __init__(self, root):
         self.root = root
@@ -14,17 +19,14 @@ class Attendance:
         self.root.maxsize(1440,900)
 
         #------------Varibales------------
+        self.var_employee_id=StringVar()
         self.var_department=StringVar()
         self.var_name=StringVar()
         self.var_phone_number=StringVar()
-        self.var_address=StringVar()
         self.var_email=StringVar()
-        self.var_gender=StringVar()
-        self.var_joined_date=StringVar()
-        self.var_salary=StringVar()
-        self.var_Emergency_contact=StringVar()
-        self.var_employee_id=StringVar()
-        self.var_radio1=StringVar()
+        self.var_date=StringVar()
+        self.var_time=StringVar()
+        self.var_attendance_status=StringVar()
  
         
         #Background Image
@@ -69,14 +71,14 @@ class Attendance:
         dep_label = Label(left_frame, text="Department", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         dep_label.grid(row=1, column=0, padx=2, pady=15)
 
-        dep_entry = ttk.Entry(left_frame,textvariable=self.var_email, font=(Constants.Add_Employee_font , 15 ), width=22 )
+        dep_entry = ttk.Entry(left_frame,textvariable=self.var_department, font=(Constants.Add_Employee_font , 15 ), width=22 )
         dep_entry.grid(row=1, column=1, padx=10, pady=15, sticky=tk.W)
 
         # Gender
         attendance_label = Label(left_frame, text="Attendance Status", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         attendance_label.grid(row=1, column=2, padx=10, pady=15)
 
-        attendance_combo = ttk.Combobox(left_frame,textvariable=self.var_gender, font=(Constants.Add_Employee_font , 12, "bold"), width=28, state="readonly")
+        attendance_combo = ttk.Combobox(left_frame,textvariable=self.var_attendance_status, font=(Constants.Add_Employee_font , 12, "bold"), width=28, state="readonly")
         attendance_combo["values"] = ("Status" ,"Present", "Absent")
         attendance_combo.current(0)
         attendance_combo.grid(row=1, column=3, padx=2, pady=15, sticky=tk.W)
@@ -85,14 +87,14 @@ class Attendance:
         time_label = Label(left_frame, text="Time", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         time_label.grid(row=1, column=4, padx=2, pady=15)
 
-        time_entry = ttk.Entry(left_frame,textvariable=self.var_email, font=(Constants.Add_Employee_font , 15 ), width=22 )
+        time_entry = ttk.Entry(left_frame,textvariable=self.var_time, font=(Constants.Add_Employee_font , 15 ), width=22 )
         time_entry.grid(row=1, column=5, padx=10, pady=15, sticky=tk.W)
 
         # Department
         date_label = Label(left_frame, text="Date", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         date_label.grid(row=2, column=0, padx=2, pady=15)
 
-        date_entry = ttk.Entry(left_frame,textvariable=self.var_email, font=(Constants.Add_Employee_font , 15 ), width=22 )
+        date_entry = ttk.Entry(left_frame,textvariable=self.var_date, font=(Constants.Add_Employee_font , 15 ), width=22 )
         date_entry.grid(row=2, column=1, padx=10, pady=15, sticky=tk.W)
 
         #button_frame
@@ -100,7 +102,7 @@ class Attendance:
         btn_frame.place(x=40, y=200, width=1100, height=50)
 
         #save_button
-        save_btn=Button(btn_frame, text="Import csv",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
+        save_btn=Button(btn_frame, text="Import csv",command=self.importCsv,font=(Constants.Add_Employee_font ,15),highlightthickness=0)
         save_btn.grid(row=0,column=1)
 
         #WhiteSpace_between_buttons
@@ -108,7 +110,7 @@ class Attendance:
         white_space.grid(row=0,column=2)
 
         #update_button
-        export_btn=Button(btn_frame, text="Export csv",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
+        export_btn=Button(btn_frame, text="Export csv",command=self.exportCsv,font=(Constants.Add_Employee_font ,15),highlightthickness=0)
         export_btn.grid(row=0,column=3)
 
         #WhiteSpace_between_buttons
@@ -147,10 +149,12 @@ class Attendance:
         
         scroll_x.pack(side="bottom", fill="x")
         scroll_y.pack(side="right", fill="y")
+
         scroll_x.config(command=self.attendance_table.xview)
         scroll_y.config(command=self.attendance_table.yview)
+
         self.attendance_table.heading("employee_id", text="Employee Id")
-        self.attendance_table.heading("dep", text="Department ")
+        self.attendance_table.heading("dep", text="Department")
         self.attendance_table.heading("name", text="Name")
         self.attendance_table.heading("email", text="Email")
         self.attendance_table.heading("time", text="Time")
@@ -170,39 +174,23 @@ class Attendance:
         #Bind event with get_cursor method
         self.attendance_table.bind("<ButtonRelease>",self.get_cursor)
 
-        self.fetch_data()
+       
 
     #================fetch data===============#
-    def fetch_data(self):
-     conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
-     my_cursor=conn.cursor()
-     my_cursor.execute("select * from employee")
-     data=my_cursor.fetchall()
-     
-     #if the data contains rows in it
-     if len(data)!=0:
+    def fetch_data(self,rows):
          self.attendance_table.delete(*self.attendance_table.get_children())
-         for i in data:
+         for i in rows:
              self.attendance_table.insert("",END, values=i)
-         
-     else:
-          self.attendance_table.delete(*self.attendance_table.get_children())
-     conn.close()
-  
 
     #--------reset function------------
     def reset_data(self):
         self.var_employee_id.set(""),
         self.var_department.set("Select Department"),
         self.var_name.set(""),
-        self.var_phone_number.set(""),
-        self.var_address.set(""),
         self.var_email.set(""),
-        self.var_gender.set("Select Gender"),
-        self.var_joined_date.set(""), 
-        self.var_salary.set(""),
-        self.var_Emergency_contact.set(""),
-        self.var_radio1.set("")
+        self.var_time.set(""),
+        self.var_date.set("")
+        self.var_attendance_status.set("")
 
     def get_cursor(self , event=""):
         cursor_focus=self.attendance_table.focus()
@@ -216,6 +204,35 @@ class Attendance:
          self.var_name.set(data[2]),
          self.var_phone_number.set(data[3]),
          self.var_email.set(data[5]),
+
+    def importCsv(self):
+        global my_data
+        my_data.clear()
+        fln=filedialog.askopenfilename(initialdir=os.getcwd(),title="Open CSV",filetypes=(("CSV File","*.csv"),("ALL File","*.*")),parent=self.root)
+
+        with open (fln) as myfile:
+            csvread=csv.reader(myfile,delimiter=",")
+            for i in csvread:
+                my_data.append(i)
+            self.fetch_data(my_data)
+
+
+    def exportCsv(self):
+        try:
+            if len(my_data)<1:
+                messagebox.showerror("No Data","No data is found to export",parent=self.root)
+                return False
+
+            fln=filedialog.asksaveasfilename(initialdir=os.getcwd(),title="Open CSV",filetypes=(("CSV File","*.csv"),("ALL File","*.*")),parent=self.root)
+
+            with open(fln,mode="w",newline="") as myfile:
+                exp_write=csv.writer(myfile,delimiter="")
+                for i in my_data:
+                    exp_write.writerow(i)
+                    messagebox.showinfo("Data Exported","Your data exported to"+os.path.basename(fln)+"successfully")
+
+        except Exception as e:
+            messagebox.showerror("Error",f"Due to: {str(e)}",parent=self.root)
         
 
             
