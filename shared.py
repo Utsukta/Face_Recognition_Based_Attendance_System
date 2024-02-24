@@ -1,5 +1,6 @@
 from tkinter import *
 from PIL import Image, ImageTk
+from attendance import Attendance
 from constants import Constants
 from add_employee import AddEmployee 
 from employee_details import Employee_Details
@@ -91,6 +92,7 @@ class Shared:
             self.app=Facerecognition(self.root)
             print("clicked face recognition")
     def on_attendance_label_clicked(self,event):
+            self.app=Attendance(self.root)
             print("clicked attendance")   
     def on_Exit_label_clicked(event):
             print("clicked exit")
