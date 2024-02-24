@@ -1,3 +1,4 @@
+from datetime import datetime
 import os
 import tkinter as tk
 from tkinter import END, Button, Label, LabelFrame, Frame, RIDGE, Radiobutton, StringVar, Text, ttk,messagebox
@@ -30,6 +31,21 @@ class Facerecognition:
         #save_button
         save_btn=Button(btn_frame, text="Face Detector",command=self.face_recognizer,font=(Constants.Add_Employee_font ,15),highlightthickness=0)
         save_btn.grid(row=0,column=1)
+
+
+#Marks attendance and saves it in the attendance.csv
+    def mark_attendence(self,i,n,d,e):
+        with open('attendance.csv',"r+",newline="\n") as f:
+            myDataList=f.readlines()
+            name_list=[]
+            for line in myDataList:
+                entry=line.split((","))
+                name_list.append(entry[0])
+            if ((i not in name_list) and (n not in name_list) and (d not in name_list) and (e not in name_list)):
+                now=datetime.now()
+                d1=now.strftime("%d\%m\%Y")
+                dfstring=now.strftime("%H:%M:%S")
+                f.writelines(f"\n{i},{n},{d},{e},{dfstring},{d1},Present")
         
 
     def face_recognizer(self):
@@ -58,16 +74,26 @@ class Facerecognition:
                 print(n)
 
 
+                my_cursor.execute("SELECT employee_id from employee WHERE employee_id="+str((id)))
+                i=my_cursor.fetchone()
+                i="+".join(i)
+
                 my_cursor.execute("SELECT department from employee WHERE employee_id="+str((id)))
                 d=my_cursor.fetchone()
                 d="+".join(d)
+
+                my_cursor.execute("SELECT email from employee WHERE employee_id="+str((id)))
+                e=my_cursor.fetchone()
+                e="+".join(e)
              
 
-
-
                 if confidence>77:
+                    cv2.putText(img,f"Employee ID:{i}",(x,y-80),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
                     cv2.putText(img,f"Name:{n}",(x,y-55),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
                     cv2.putText(img,f"department:{d}",(x,y-30),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
+                    cv2.putText(img,f"Emaill Address:{e}",(x,y-5),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
+                    self.mark_attendence(i,n,d,e)
+
                 else:
                     cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,255),3)
                     cv2.putText(img,"Unknown Face",(x,y-5),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
