@@ -53,15 +53,15 @@ class Facerecognition:
                 my_cursor=conn.cursor()
                 my_cursor.execute("SELECT Name from employee WHERE employee_id="+str((id)))
                 n=my_cursor.fetchone()
-                # n="+".join(n)
-                n = "+".join([str(n)])
+                n="+".join(n)
+                # n = "+".join([str(n)])
                 print(n)
 
 
                 my_cursor.execute("SELECT department from employee WHERE employee_id="+str((id)))
                 d=my_cursor.fetchone()
-                # d="+".join(d)
-                d = "+".join([str(d)])
+                d="+".join(d)
+             
 
 
 
