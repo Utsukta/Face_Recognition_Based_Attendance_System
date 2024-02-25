@@ -487,8 +487,7 @@ class AddEmployee:
 
                 self.reset_data()
 
-                     
-                     
+                              
             except Exception as e:
                 messagebox.showerror("Error",f"Due to:{str(e)}",parent=self.root)
         
