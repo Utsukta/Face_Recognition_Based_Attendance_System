@@ -56,43 +56,45 @@ class Attendance:
         name_entry = ttk.Entry(left_frame, textvariable=self.var_name,font=(Constants.Add_Employee_font , 15 ), width=22)
         name_entry.grid(row=0, column=3, padx=10, pady=15)
 
+        # Department
+        dep_label = Label(left_frame, text="Department", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        dep_label.grid(row=0, column=4, padx=2, pady=15)
+
+        dep_entry = ttk.Entry(left_frame,textvariable=self.var_department, font=(Constants.Add_Employee_font , 15 ), width=22 )
+        dep_entry.grid(row=0, column=5, padx=10, pady=15, sticky=tk.W)
+
 
         # Email Address
         email_label = Label(left_frame, text="Email Address", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
-        email_label.grid(row=0, column=4, padx=10, pady=15)
+        email_label.grid(row=1, column=0, padx=10, pady=15)
 
         email_entry = ttk.Entry(left_frame,textvariable=self.var_email, font=(Constants.Add_Employee_font , 15 ), width=22 )
-        email_entry.grid(row=0, column=5, padx=10, pady=15, sticky=tk.W)
+        email_entry.grid(row=1, column=1, padx=10, pady=15, sticky=tk.W)
+
+     
 
         # Department
-        dep_label = Label(left_frame, text="Department", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
-        dep_label.grid(row=1, column=0, padx=2, pady=15)
+        time_label = Label(left_frame, text="Time", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        time_label.grid(row=1, column=2, padx=2, pady=15)
 
-        dep_entry = ttk.Entry(left_frame,textvariable=self.var_department, font=(Constants.Add_Employee_font , 15 ), width=22 )
-        dep_entry.grid(row=1, column=1, padx=10, pady=15, sticky=tk.W)
+        time_entry = ttk.Entry(left_frame,textvariable=self.var_time, font=(Constants.Add_Employee_font , 15 ), width=22 )
+        time_entry.grid(row=1, column=3, padx=10, pady=15, sticky=tk.W)
 
-        # Gender
+        # Department
+        date_label = Label(left_frame, text="Date", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        date_label.grid(row=1, column=4, padx=2, pady=15)
+
+        date_entry = ttk.Entry(left_frame,textvariable=self.var_date, font=(Constants.Add_Employee_font , 15 ), width=22 )
+        date_entry.grid(row=1, column=5, padx=10, pady=15, sticky=tk.W)
+
+        # Attendance
         attendance_label = Label(left_frame, text="Attendance Status", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
-        attendance_label.grid(row=1, column=2, padx=10, pady=15)
+        attendance_label.grid(row=2, column=0, padx=10, pady=15)
 
         attendance_combo = ttk.Combobox(left_frame,textvariable=self.var_attendance_status, font=(Constants.Add_Employee_font , 12, "bold"), width=28, state="readonly")
         attendance_combo["values"] = ("Status" ,"Present", "Absent")
         attendance_combo.current(0)
-        attendance_combo.grid(row=1, column=3, padx=2, pady=15, sticky=tk.W)
-
-        # Department
-        time_label = Label(left_frame, text="Time", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
-        time_label.grid(row=1, column=4, padx=2, pady=15)
-
-        time_entry = ttk.Entry(left_frame,textvariable=self.var_time, font=(Constants.Add_Employee_font , 15 ), width=22 )
-        time_entry.grid(row=1, column=5, padx=10, pady=15, sticky=tk.W)
-
-        # Department
-        date_label = Label(left_frame, text="Date", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
-        date_label.grid(row=2, column=0, padx=2, pady=15)
-
-        date_entry = ttk.Entry(left_frame,textvariable=self.var_date, font=(Constants.Add_Employee_font , 15 ), width=22 )
-        date_entry.grid(row=2, column=1, padx=10, pady=15, sticky=tk.W)
+        attendance_combo.grid(row=2, column=1, padx=2, pady=15, sticky=tk.W)
 
         #button_frame
         btn_frame = Frame(left_frame,bg=Constants.content_background_color)
@@ -142,7 +144,7 @@ class Attendance:
         scroll_x=ttk.Scrollbar(table_frame, orient="horizontal")
         scroll_y=ttk.Scrollbar(table_frame, orient="vertical")
         
-        self.attendance_table=ttk.Treeview(table_frame, column=("employee_id","dep","name","email","time","date","attendance"),xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set,)
+        self.attendance_table=ttk.Treeview(table_frame, column=("employee_id","name","dep","email","time","date","attendance"),xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set,)
         
         scroll_x.pack(side="bottom", fill="x")
         scroll_y.pack(side="right", fill="y")
@@ -151,9 +153,10 @@ class Attendance:
         scroll_y.config(command=self.attendance_table.yview)
 
         self.attendance_table.heading("employee_id", text="Employee Id")
-        self.attendance_table.heading("dep", text="Department")
+        
         self.attendance_table.heading("name", text="Name")
         self.attendance_table.heading("email", text="Email")
+        self.attendance_table.heading("dep", text="Department")
         self.attendance_table.heading("time", text="Time")
         self.attendance_table.heading("date", text="Date")
         self.attendance_table.heading("attendance", text="Attendance")
@@ -194,13 +197,18 @@ class Attendance:
         content=self.attendance_table.item(cursor_focus)
         data=content["values"]
         print(data)
-        if len(data) >= 11:
+        
 
-         self.var_employee_id.set(data[0]),
-         self.var_department.set(data[1]),
-         self.var_name.set(data[2]),
-         self.var_phone_number.set(data[3]),
-         self.var_email.set(data[5]),
+        self.var_employee_id.set(data[0]),
+        self.var_name.set(data[1]),
+        
+        self.var_department.set(data[2]),
+        self.var_email.set(data[3]),
+        
+        self.var_time.set(data[4]),
+        self.var_date.set(data[5]),
+        self.var_attendance_status.set(data[6]),
+        
 
     def importCsv(self):
         global my_data
@@ -230,6 +238,31 @@ class Attendance:
 
         except Exception as e:
             messagebox.showerror("Error",f"Due to: {str(e)}",parent=self.root)
+
+    def update_data(self):
+            try:
+                Update=messagebox.askyesno("Update","Do you want to update this student details",parent=self.root)
+                if Update>0:
+                  
+                        self.var_department.get(),
+                        self.var_name.get(),
+                        self.var_phone_number.get(),
+                        self.var_email.get(),
+                        self.var_employee_id.get(),
+
+                  
+                else:
+                    if not Update:
+                        return 
+                messagebox.showinfo("Success","Attendance details successfully update completed",parent=self.root)
+             
+                self.fetch_data()
+                
+             
+            except Exception as e:
+                messagebox.showerror("Error",f"Due to:{str(e)}",parent=self.root)
+
+
         
 
             
