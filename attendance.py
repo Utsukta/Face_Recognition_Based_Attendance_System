@@ -198,7 +198,6 @@ class Attendance:
         data=content["values"]
         print(data)
         
-
         self.var_employee_id.set(data[0]),
         self.var_name.set(data[1]),
         
