@@ -1,3 +1,4 @@
+import re
 import tkinter as tk
 from tkinter import END, Button, Label, LabelFrame, Frame, RIDGE, Radiobutton, StringVar, Text, ttk,messagebox
 from tkinter import Entry
@@ -67,8 +68,11 @@ class AddEmployee:
         email_label = Label(left_frame, text="Email Address", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         email_label.grid(row=1, column=0, padx=10, pady=15)
 
-        email_entry = ttk.Entry(left_frame,textvariable=self.var_email, font=(Constants.Add_Employee_font , 15 ), width=22 )
+        email_entry = ttk.Entry(left_frame,textvariable=self.var_email,font=(Constants.Add_Employee_font , 15 ), width=22 )
         email_entry.grid(row=1, column=1, padx=10, pady=15, sticky=tk.W)
+
+        email_entry.bind("<FocusOut>", lambda event, var=self.var_email: self._is_valid_email(var.get()))
+
 
         # Gender
         gender_label = Label(left_frame, text="Gender", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
@@ -490,10 +494,35 @@ class AddEmployee:
                               
             except Exception as e:
                 messagebox.showerror("Error",f"Due to:{str(e)}",parent=self.root)
-        
-           
-    
 
+    def _is_valid_email(self, email):
+        regex = "^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$"
+        if not re.match(regex, email):
+            messagebox.showerror("Error","Invalid Email Address, Sample(u@gmail.com)",parent=self.root)
+            self.disable_widgets()
+        else:
+            self.enable_widgets()
+        return email
+    
+    def disable_widgets(self):
+        # Disable necessary widgets when email is invalid
+        # You can add more widgets here as needed
+        self.var_department.set("Select Department")
+        self.var_name.set("")
+        self.var_phone_number.set("")
+        # Disable buttons
+        self.save_btn["state"] = "disabled"
+        self.update_btn["state"] = "disabled"
+        self.delete_btn["state"] = "disabled"
+        # ...
+
+
+    def enable_widgets(self):
+        # Enable all necessary widgets when email is valid
+        # You can add more widgets here as needed
+        self.save_btn["state"] = "normal"
+        self.update_btn["state"] = "normal"
+        self.delete_btn["state"] = "normal"
             
 if __name__ == "__main__":
     root = tk.Tk()
