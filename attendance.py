@@ -192,6 +192,7 @@ class Attendance:
         self.var_date.set("")
         self.var_attendance_status.set("")
 
+
     def get_cursor(self , event=""):
         cursor_focus=self.attendance_table.focus()
         content=self.attendance_table.item(cursor_focus)
