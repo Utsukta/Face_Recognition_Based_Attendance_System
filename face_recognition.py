@@ -6,7 +6,7 @@ from PIL import Image, ImageTk
 from constants import Constants
 import mysql.connector
 import cv2
-# import pyttsx3
+
 
 class Facerecognition:
     def __init__(self, root):
