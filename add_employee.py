@@ -516,7 +516,6 @@ class AddEmployee:
         self.delete_btn["state"] = "disabled"
         # ...
 
-
     def enable_widgets(self):
         # Enable all necessary widgets when email is valid
         # You can add more widgets here as needed
