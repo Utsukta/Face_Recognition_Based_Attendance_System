@@ -71,7 +71,7 @@ class AddEmployee:
         email_entry = ttk.Entry(left_frame,textvariable=self.var_email,font=(Constants.Add_Employee_font , 15 ), width=22 )
         email_entry.grid(row=1, column=1, padx=10, pady=15, sticky=tk.W)
 
-        email_entry.bind("<FocusOut>", lambda event, var=self.var_email: self._is_valid_email(var.get()))
+        # email_entry.bind("<FocusOut>", lambda event, var=self.var_email: self._is_valid_email(var.get()))
 
 
         # Gender
@@ -176,6 +176,7 @@ class AddEmployee:
         update_photo_btn=Button(btn_frame, text="Update Photo Samples",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
         update_photo_btn.grid(row=0,column=11)
 
+
         #Right Frame
         right_frame = LabelFrame(bg_img,bd=10,bg=Constants.content_background_color,fg=Constants.frame_content_text_color,text="Employee Details",relief=RIDGE, font=("times new roman", 18 ))
         right_frame.place(x=45, y=440, width=1227, height=400)
@@ -253,6 +254,9 @@ class AddEmployee:
     def add_data(self):
         if self.var_department.get()=="Select Department" or self.var_address.get()=="" or self.var_email.get()=="" or self.var_employee_id.get()=="" or self.var_gender.get()=="Select Gender" or self.var_joined_date.get()=="" or self.var_phone_number.get()==""or self.var_Emergency_contact.get()=="" or self.var_salary.get()=="":
            messagebox.showerror("Error","All fields are required",parent=self.root)
+        elif not self.validate_form():
+        # Display an error message for invalid email
+           pass
         else:
             try:
                 conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
@@ -495,33 +499,34 @@ class AddEmployee:
             except Exception as e:
                 messagebox.showerror("Error",f"Due to:{str(e)}",parent=self.root)
 
-    def _is_valid_email(self, email):
-        regex = "^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$"
-        if not re.match(regex, email):
-            messagebox.showerror("Error","Invalid Email Address, Sample(u@gmail.com)",parent=self.root)
-            self.disable_widgets()
-        else:
-            self.enable_widgets()
-        return email
-    
-    def disable_widgets(self):
-        # Disable necessary widgets when email is invalid
-        # You can add more widgets here as needed
-        self.var_department.set("Select Department")
-        self.var_name.set("")
-        self.var_phone_number.set("")
-        # Disable buttons
-        self.save_btn["state"] = "disabled"
-        self.update_btn["state"] = "disabled"
-        self.delete_btn["state"] = "disabled"
-        # ...
+    # def _is_valid_email(self, email):
+    #     regex = "^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$"
+    #     if not re.match(regex, email):
+    #         messagebox.showerror("Error","Invalid Email Address, Sample(u@gmail.com)",parent=self.root)
+    #         self.disable_widgets()
+    #     else:
+    #         self.enable_widgets()
+    #     return email
+    def validate_form(self):
+        email = self.var_email.get()
+        # phone = self.var_phone.get()
 
-    def enable_widgets(self):
-        # Enable all necessary widgets when email is valid
-        # You can add more widgets here as needed
-        self.save_btn["state"] = "normal"
-        self.update_btn["state"] = "normal"
-        self.delete_btn["state"] = "normal"
+        if not self.validate_email(email):
+            messagebox.showerror("Error", "Invalid Email Address")
+        # elif not self.validate_phone(phone):
+        #     messagebox.showerror("Error", "Invalid Phone Number")
+        else:
+            messagebox.showinfo("Success", "Form Submitted Successfully")
+
+    def validate_email(self, email):
+        regex = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+        return re.match(regex, email)
+
+    def validate_phone(self, phone):
+        # Simple phone number validation: 10 digits, no characters
+        regex = r"^\d{10}$"
+        return re.match(regex, phone)
+
             
 if __name__ == "__main__":
     root = tk.Tk()
