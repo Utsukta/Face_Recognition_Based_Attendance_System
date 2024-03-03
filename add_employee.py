@@ -249,7 +249,6 @@ class AddEmployee:
 
         self.fetch_data()
 
-
     #------------function declaration-----------------
     def add_data(self):
         if self.var_department.get()=="Select Department" or self.var_address.get()=="" or self.var_email.get()=="" or self.var_employee_id.get()=="" or self.var_gender.get()=="Select Gender" or self.var_joined_date.get()=="" or self.var_phone_number.get()==""or self.var_Emergency_contact.get()=="" or self.var_salary.get()=="":
