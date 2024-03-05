@@ -253,11 +253,9 @@ class AddEmployee:
     def add_data(self):
         if self.var_department.get()=="Select Department" or self.var_address.get()=="" or self.var_email.get()=="" or self.var_employee_id.get()=="" or self.var_gender.get()=="Select Gender" or self.var_joined_date.get()=="" or self.var_phone_number.get()==""or self.var_Emergency_contact.get()=="" or self.var_salary.get()=="":
            messagebox.showerror("Error","All fields are required",parent=self.root)
-        # elif not self.validate_form():
-        #     pass
-        # Display an error message for invalid email
-         
-        elif self.validate_form():
+        elif not self.validate_form():
+            pass
+        else:
             try:
                 conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
                 my_cursor=conn.cursor()
