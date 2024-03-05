@@ -513,10 +513,12 @@ class AddEmployee:
 
         if not self.validate_email(email):
             messagebox.showerror("Error", "Invalid Email Address")
+            return False
         # elif not self.validate_phone(phone):
         #     messagebox.showerror("Error", "Invalid Phone Number")
-        # else:
-        #     messagebox.showinfo("Success", "Form Submitted Successfully")
+        else:
+            return True
+            
 
     def validate_email(self, email):
         regex = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
