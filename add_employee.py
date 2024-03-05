@@ -337,6 +337,8 @@ class AddEmployee:
     def update_data(self):
         if self.var_department.get()=="Select Department" or self.var_address.get()=="" or self.var_email.get()=="" or self.var_employee_id.get()=="" or self.var_gender.get()=="Select Gender" or self.var_joined_date.get()=="" or self.var_phone_number.get()==""or self.var_Emergency_contact.get()=="" or self.var_salary.get()=="":
            messagebox.showerror("Error","All fields are required",parent=self.root)
+        elif not self.validate_form():
+            pass
         else:
             try:
                 Update=messagebox.askyesno("Update","Do you want to update this student details",parent=self.root)
