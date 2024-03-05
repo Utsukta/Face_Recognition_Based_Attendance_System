@@ -6,6 +6,7 @@ from PIL import Image, ImageTk
 from constants import Constants
 import mysql.connector
 import cv2
+from tkcalendar import Calendar
 
 class AddEmployee:
     def __init__(self, root):
@@ -71,9 +72,6 @@ class AddEmployee:
         email_entry = ttk.Entry(left_frame,textvariable=self.var_email,font=(Constants.Add_Employee_font , 15 ), width=22 )
         email_entry.grid(row=1, column=1, padx=10, pady=15, sticky=tk.W)
 
-        # email_entry.bind("<FocusOut>", lambda event, var=self.var_email: self._is_valid_email(var.get()))
-
-
         # Gender
         gender_label = Label(left_frame, text="Gender", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         gender_label.grid(row=1, column=2, padx=10, pady=15)
@@ -87,8 +85,11 @@ class AddEmployee:
         joined_label = Label(left_frame, text="Joined Date", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         joined_label.grid(row=1, column=4, padx=10, pady=15)
 
-        joined_entry = ttk.Entry(left_frame, textvariable=self.var_joined_date,font=(Constants.Add_Employee_font , 15 ), width=22)
+        joined_entry = Calendar(left_frame, textvariable=self.var_joined_date,font=(Constants.Add_Employee_font , 15 ),selectmode='day', locale='en_US', date_pattern='yyyy-mm-dd')
         joined_entry.grid(row=1, column=5, padx=10, pady=15, sticky=tk.W)
+
+        # joined_entry = ttk.Entry(left_frame, textvariable=self.var_joined_date,font=(Constants.Add_Employee_font , 15 ), width=22)
+        # joined_entry.grid(row=1, column=5, padx=10, pady=15, sticky=tk.W)
 
         # Department
         dep_label = Label(left_frame, text="Department", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
