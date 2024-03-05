@@ -497,23 +497,15 @@ class AddEmployee:
             except Exception as e:
                 messagebox.showerror("Error",f"Due to:{str(e)}",parent=self.root)
 
-    # def _is_valid_email(self, email):
-    #     regex = "^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$"
-    #     if not re.match(regex, email):
-    #         messagebox.showerror("Error","Invalid Email Address, Sample(u@gmail.com)",parent=self.root)
-    #         self.disable_widgets()
-    #     else:
-    #         self.enable_widgets()
-    #     return email
     def validate_form(self):
         email = self.var_email.get()
-        # phone = self.var_phone.get()
+        phone = self.var_phone_number.get()
 
         if not self.validate_email(email):
             messagebox.showerror("Error", "Invalid Email Address")
             return False
-        # elif not self.validate_phone(phone):
-        #     messagebox.showerror("Error", "Invalid Phone Number")
+        elif not self.validate_phone(phone):
+            messagebox.showerror("Error", "Invalid Phone Number")
         else:
             return True
             
