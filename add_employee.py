@@ -330,8 +330,6 @@ class AddEmployee:
         # self.var_salary.set(data[8]),
         # self.var_Emergency_contact.set(data[9]),
         # self.var_radio1.set(data[10])
-        
-
 
     #--------update function--------------
     def update_data(self):
