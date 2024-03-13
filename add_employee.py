@@ -6,7 +6,7 @@ from PIL import Image, ImageTk
 from constants import Constants
 import mysql.connector
 import cv2
-from tkcalendar import Calendar
+from tkcalendar import DateEntry
 
 class AddEmployee:
     def __init__(self, root):
@@ -72,6 +72,7 @@ class AddEmployee:
         email_entry = ttk.Entry(left_frame,textvariable=self.var_email,font=(Constants.Add_Employee_font , 15 ), width=22 )
         email_entry.grid(row=1, column=1, padx=10, pady=15, sticky=tk.W)
 
+
         # Gender
         gender_label = Label(left_frame, text="Gender", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         gender_label.grid(row=1, column=2, padx=10, pady=15)
@@ -85,8 +86,16 @@ class AddEmployee:
         joined_label = Label(left_frame, text="Joined Date", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         joined_label.grid(row=1, column=4, padx=10, pady=15)
 
-        joined_entry = Calendar(left_frame, textvariable=self.var_joined_date,font=(Constants.Add_Employee_font , 15 ),selectmode='day', locale='en_US', date_pattern='yyyy-mm-dd')
-        joined_entry.grid(row=1, column=5, padx=10, pady=15, sticky=tk.W)
+
+        joined_entry = DateEntry(left_frame, textvariable=self.var_joined_date, date_pattern='yyyy-mm-dd', background='darkblue', foreground='white', selectbackground='lightgray', selectforeground='black', bordercolor='white', othermonthforeground='gray50', othermonthbackground='gray10', arrowscolor='white')
+        joined_entry.grid(row=1, column=5, padx=10, pady=15)
+
+        
+
+        # self.var_joined_date.set(2000/10/2)
+
+        # joined_entry = Calendar(left_frame, textvariable=self.var_joined_date,font=(Constants.Add_Employee_font , 15 ),selectmode='day', locale='en_US', date_pattern='yyyy-mm-dd')
+        # joined_entry.grid(row=1, column=5, padx=10, pady=15, sticky=tk.W)
 
         # joined_entry = ttk.Entry(left_frame, textvariable=self.var_joined_date,font=(Constants.Add_Employee_font , 15 ), width=22)
         # joined_entry.grid(row=1, column=5, padx=10, pady=15, sticky=tk.W)
@@ -519,7 +528,6 @@ class AddEmployee:
         # Simple phone number validation: 10 digits, no characters
         regex = r"^\d{10}$"
         return re.match(regex, phone)
-
             
 if __name__ == "__main__":
     root = tk.Tk()
