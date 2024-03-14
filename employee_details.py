@@ -1,4 +1,12 @@
+from calendar import Calendar
 from tkinter import *
+import tkinter as tk
+import tkinter
+from constants import Constants
+import tkinter as tk
+from tkinter import ttk
+from tkcalendar import Calendar
+
 from constants import Constants
 
 class Employee_Details:
@@ -17,6 +25,33 @@ class Employee_Details:
         Employee_details_label.place(x=500, y=100)
         label1= Label(text="text")
         label1.place(x=900, y=100)
+
+        self.var_joined_date = tkinter.StringVar()
+
+        # Left frame
+        left_frame = ttk.Frame(root)
+        left_frame.pack(side=tk.LEFT, padx=10, pady=10)
+
+        joined_entry = ttk.Entry(left_frame, textvariable=self.var_joined_date, font=(Constants.Add_Employee_font, 15), width=22)
+        joined_entry.grid(row=1, column=5, padx=10, pady=15, sticky=tk.W)
+
+        # Button to open calendar
+        calendar_button = ttk.Button(left_frame, text="📅", command=self.open_calendar)
+        calendar_button.grid(row=1, column=6, padx=5, pady=15, sticky=tk.W)
+
+    def open_calendar(self):
+        if not hasattr(self, "calendar_top") or not self.calendar_top.winfo_exists():
+            self.calendar_top = tk.Toplevel(root)
+            cal = Calendar(self.calendar_top, selectmode='day', locale='en_US', date_pattern='yyyy-mm-dd')
+            cal.pack(pady=20, fill="both", expand=True)
+            cal.bind("<<CalendarSelected>>", self.update_date)
+
+    def update_date(self, event=None):
+        selected_date = event.widget.get_date()
+        self.var_joined_date.set(selected_date)
+
+
+
     
 
 if __name__ == "__main__": 
