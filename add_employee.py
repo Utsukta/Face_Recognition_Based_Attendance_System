@@ -90,6 +90,7 @@ class AddEmployee:
         joined_entry = DateEntry(left_frame, textvariable=self.var_joined_date, date_pattern='yyyy-mm-dd', background='darkblue', foreground='white', selectbackground='lightgray', selectforeground='black', bordercolor='white', othermonthforeground='gray50', othermonthbackground='gray10', arrowscolor='white')
         joined_entry.grid(row=1, column=5, padx=10, pady=15)
 
+       
         
 
         # self.var_joined_date.set(2000/10/2)
@@ -528,6 +529,9 @@ class AddEmployee:
         # Simple phone number validation: 10 digits, no characters
         regex = r"^\d{10}$"
         return re.match(regex, phone)
+    
+    
+
             
 if __name__ == "__main__":
     root = tk.Tk()
