@@ -458,11 +458,6 @@ class AddEmployee:
 
                     ))
                 conn.commit()
-                # self.update_data()
-                # self.fetch_data()
-
-                # self.reset_data()
-                
                 conn.close()
 
 
