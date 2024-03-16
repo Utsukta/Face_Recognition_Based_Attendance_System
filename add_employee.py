@@ -409,11 +409,8 @@ class AddEmployee:
                  id=self.var_employee_id.get()
                  #Since 100 samples are taken
                  for i in range(1,102): 
-                  print("exising is "+'data/user.'+id+'.'+str(i)+'.jpg')
-                  os.remove('data/user.'+id+'.'+str(i)+'.jpg')
-
-                #  file_name_path="data/user."+str(id)+"."+str(img_id)+".jpg"
-
+                    print("exising is "+'data/user.'+id+'.'+str(i)+'.jpg')
+                    os.remove('data/user.'+id+'.'+str(i)+'.jpg')
 
                  self.reset_data()
                  messagebox.showinfo("Delete","Employee Details Succesfully Deleted")
