@@ -59,16 +59,11 @@ class Train:
         ids=np.array(ids)
 
         #-------------Train Classifier-----------------
-        # clf = cv2.face.LBPHFaceRecognizer_create()
-        # clf.train(faces,ids)
-        # clf.write("classifier.xml")
-        # cv2.destroyAllWindows()
-        # messagebox.showinfo("Result","Training datasets completed")
         clf=cv2.face.LBPHFaceRecognizer_create()
         clf.train(faces,ids)
         clf.write("classifier.xml")
         cv2.destroyAllWindows()
-        messagebox.showinfo("Result","Training ImageData Completed!!")
+        messagebox.showinfo("Result","Training Image Data Completed!!")
 
 
 if __name__ == "__main__":
