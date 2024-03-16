@@ -408,7 +408,8 @@ class AddEmployee:
                  #delete the images from data folder
                  id=self.var_employee_id.get()
                  #Since 100 samples are taken
-                 for i in range(1,102): 
+                 for i in range(1,101): 
+                    print(i)
                     print("exising is "+'data/user.'+id+'.'+str(i)+'.jpg')
                     os.remove('data/user.'+id+'.'+str(i)+'.jpg')
 
