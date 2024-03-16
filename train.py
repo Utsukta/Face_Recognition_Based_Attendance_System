@@ -1,6 +1,6 @@
 import os
 import tkinter as tk
-from tkinter import END, Button, Label, LabelFrame, Frame, RIDGE, Radiobutton, StringVar, Text, ttk,messagebox
+from tkinter import END, Button, Label, Frame, RIDGE,messagebox
 from tkinter import Entry
 from PIL import Image, ImageTk
 from constants import Constants
@@ -43,14 +43,10 @@ class Train:
         for image in path:
             #Converts in grey scale image
             img=Image.open(image).convert("L")
-
             #To convert in grid scale used numpy
             imageNp=np.array(img,'uint8')
             id=int(os.path.split(image)[1].split('.')[1])
             # id = int(os.path.splitext(os.path.split(image)[1])[1])
-
-            print(id)
-
             faces.append(imageNp)
             ids.append(id)
             cv2.imshow("Training",imageNp)
