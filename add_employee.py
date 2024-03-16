@@ -439,9 +439,10 @@ class AddEmployee:
                 my_curser=conn.cursor()
                 my_curser.execute("SELECT * FROM employee")
                 my_result=my_curser.fetchall()
-                id=0
-                for x in my_result:
-                     id+=1
+                id=self.var_employee_id.get()
+                # id=0
+                # for x in my_result:
+                #      id+=1
                 my_curser.execute("Update employee set department=%s,Name=%s,Phone=%s,address=%s,email=%s,gender=%s,joined=%s,salary=%s,emergency_contact=%s,Photo_sample=%s where employee_id=%s",(
                         
                         self.var_department.get(),
@@ -494,10 +495,10 @@ class AddEmployee:
                 cap.release()
                 cv2.destroyAllWindows()
                 messagebox.showinfo("Result","Generating datasets Completed")
-                # self.update_data()
+                
+                # self.add_data()
                 self.fetch_data()
-
-                self.reset_data()
+                # self.reset_data()
 
                               
             except Exception as e:
