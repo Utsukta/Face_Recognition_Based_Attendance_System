@@ -1,3 +1,4 @@
+import os
 import re
 import tkinter as tk
 from tkinter import END, Button, Label, LabelFrame, Frame, RIDGE, Radiobutton, StringVar, Text, ttk,messagebox
@@ -392,6 +393,7 @@ class AddEmployee:
             check_val=(self.var_employee_id.get(),)
             my_curser.execute(check_sql,check_val)
             existing_is=my_curser.fetchone()
+            print("is exising is "+str(existing_is))
 
             if existing_is:
                delete=messagebox.askyesno("Employee Delete Page","Do you want to delete the data?",parent=self.root)
@@ -402,6 +404,17 @@ class AddEmployee:
                  my_curser.execute(delete_sql,delete_val)
                  conn.commit()
                  self.fetch_data()
+
+                 #delete the images from data folder
+                 id=self.var_employee_id.get()
+                 #Since 100 samples are taken
+                 for i in range(1,102): 
+                  print("exising is "+'data/user.'+id+'.'+str(i)+'.jpg')
+                  os.remove('data/user.'+id+'.'+str(i)+'.jpg')
+
+                #  file_name_path="data/user."+str(id)+"."+str(img_id)+".jpg"
+
+
                  self.reset_data()
                  messagebox.showinfo("Delete","Employee Details Succesfully Deleted")
                  conn.close()
