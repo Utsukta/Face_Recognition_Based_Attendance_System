@@ -36,58 +36,58 @@ class AddEmployee:
         bg_img= Label(self.root, image=self.photoimg)
         bg_img.place(x=150,y=0, width=1280,height=900)
 
-        #left Frame
-        left_frame = LabelFrame(bg_img,bd=10,bg=Constants.content_background_color,fg=Constants.frame_content_text_color,text="Add Employee",relief=RIDGE, font=("times new roman", 18 ))
-        left_frame.place(x=45, y=20, width=1227, height=400)
+        #top Frame
+        top_frame = LabelFrame(bg_img,bd=10,bg=Constants.content_background_color,fg=Constants.frame_content_text_color,text="Add Employee",relief=RIDGE, font=("times new roman", 18 ))
+        top_frame.place(x=45, y=20, width=1227, height=400)
 
         # instance of shared
         from shared import Shared
         self.shared = Shared(self.root)
 
         # Full Name
-        name_label = Label(left_frame,text="Full Name", font=(Constants.Add_Employee_font, 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        name_label = Label(top_frame,text="Full Name", font=(Constants.Add_Employee_font, 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         name_label.grid(row=0, column=0, padx=10, pady=15)
 
-        name_entry = ttk.Entry(left_frame, textvariable=self.var_name,font=(Constants.Add_Employee_font , 15 ), width=22)
+        name_entry = ttk.Entry(top_frame, textvariable=self.var_name,font=(Constants.Add_Employee_font , 15 ), width=22)
         name_entry.grid(row=0, column=1, padx=10, pady=15)
 
         # Address
-        address_label = Label(left_frame, text="Address", font=(Constants.Add_Employee_font, 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        address_label = Label(top_frame, text="Address", font=(Constants.Add_Employee_font, 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         address_label.grid(row=0, column=2, padx=10, pady=15)
 
-        address_entry = ttk.Entry(left_frame, textvariable=self.var_address,font=(Constants.Add_Employee_font , 15 ), width=22 )
+        address_entry = ttk.Entry(top_frame, textvariable=self.var_address,font=(Constants.Add_Employee_font , 15 ), width=22 )
         address_entry.grid(row=0, column=3, padx=10, pady=15, sticky=tk.W)
 
         # Phone Number
-        phone_label = Label(left_frame, text="Phone Number", font=(Constants.Add_Employee_font ,15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        phone_label = Label(top_frame, text="Phone Number", font=(Constants.Add_Employee_font ,15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         phone_label.grid(row=0, column=4, padx=10, pady=15)
 
-        phone_entry = ttk.Entry(left_frame, textvariable=self.var_phone_number,font=(Constants.Add_Employee_font , 15 ), width=22 )
+        phone_entry = ttk.Entry(top_frame, textvariable=self.var_phone_number,font=(Constants.Add_Employee_font , 15 ), width=22 )
         phone_entry.grid(row=0, column=5, padx=10, pady=15, sticky=tk.W)
 
         # Email Address
-        email_label = Label(left_frame, text="Email Address", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        email_label = Label(top_frame, text="Email Address", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         email_label.grid(row=1, column=0, padx=10, pady=15)
 
-        email_entry = ttk.Entry(left_frame,textvariable=self.var_email,font=(Constants.Add_Employee_font , 15 ), width=22 )
+        email_entry = ttk.Entry(top_frame,textvariable=self.var_email,font=(Constants.Add_Employee_font , 15 ), width=22 )
         email_entry.grid(row=1, column=1, padx=10, pady=15, sticky=tk.W)
 
 
         # Gender
-        gender_label = Label(left_frame, text="Gender", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        gender_label = Label(top_frame, text="Gender", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         gender_label.grid(row=1, column=2, padx=10, pady=15)
 
-        gender_combo = ttk.Combobox(left_frame,textvariable=self.var_gender, font=(Constants.Add_Employee_font , 12, "bold"), width=28, state="readonly")
+        gender_combo = ttk.Combobox(top_frame,textvariable=self.var_gender, font=(Constants.Add_Employee_font , 12, "bold"), width=28, state="readonly")
         gender_combo["values"] = ("Select Gender" ,"Male", "Female","Other")
         gender_combo.current(0)
         gender_combo.grid(row=1, column=3, padx=2, pady=15, sticky=tk.W)
 
         # Joined Date
-        joined_label = Label(left_frame, text="Joined Date", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        joined_label = Label(top_frame, text="Joined Date", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         joined_label.grid(row=1, column=4, padx=10, pady=15)
 
 
-        joined_entry = DateEntry(left_frame, textvariable=self.var_joined_date, date_pattern='yyyy-mm-dd', background='darkblue', foreground='white', selectbackground='lightgray', selectforeground='black', bordercolor='white', othermonthforeground='gray50', othermonthbackground='gray10', arrowscolor='white')
+        joined_entry = DateEntry(top_frame, textvariable=self.var_joined_date, date_pattern='yyyy-mm-dd', background='darkblue', foreground='white', selectbackground='lightgray', selectforeground='black', bordercolor='white', othermonthforeground='gray50', othermonthbackground='gray10', arrowscolor='white')
         joined_entry.grid(row=1, column=5, padx=10, pady=15)
 
        
@@ -102,45 +102,45 @@ class AddEmployee:
         # joined_entry.grid(row=1, column=5, padx=10, pady=15, sticky=tk.W)
 
         # Department
-        dep_label = Label(left_frame, text="Department", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        dep_label = Label(top_frame, text="Department", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         dep_label.grid(row=2, column=0, padx=2, pady=15)
 
-        dep_combo = ttk.Combobox(left_frame, textvariable=self.var_department,font=(Constants.Add_Employee_font ,12, "bold"), width=28, state="readonly")
+        dep_combo = ttk.Combobox(top_frame, textvariable=self.var_department,font=(Constants.Add_Employee_font ,12, "bold"), width=28, state="readonly")
         dep_combo["values"] = ("Select Department", "HR", "IT", "Finance", "Marketing", "Operations")
         dep_combo.current(0)
         dep_combo.grid(row=2, column=1, padx=2, pady=15, sticky=tk.W)
 
         # Salary
-        salary_label = Label(left_frame, text="Salary", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        salary_label = Label(top_frame, text="Salary", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         salary_label.grid(row=2, column=2, padx=10, pady=15)
 
-        salary_entry = ttk.Entry(left_frame, textvariable=self.var_salary,font=(Constants.Add_Employee_font , 15 ), width=22 )
+        salary_entry = ttk.Entry(top_frame, textvariable=self.var_salary,font=(Constants.Add_Employee_font , 15 ), width=22 )
         salary_entry.grid(row=2, column=3, padx=10, pady=15, sticky=tk.W)
 
         # Emergency Contacts
-        emergency_label = Label(left_frame, text="Emergency Contacts", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        emergency_label = Label(top_frame, text="Emergency Contacts", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         emergency_label.grid(row=2, column=4, padx=10, pady=15)
 
-        emergency_entry = ttk.Entry(left_frame, textvariable=self.var_Emergency_contact,font=(Constants.Add_Employee_font , 15 ), width=22 )
+        emergency_entry = ttk.Entry(top_frame, textvariable=self.var_Emergency_contact,font=(Constants.Add_Employee_font , 15 ), width=22 )
         emergency_entry.grid(row=2, column=5, padx=10, pady=15, sticky=tk.W)
 
         # Employee_id
-        employee_id_label = Label(left_frame, text="Employee Id", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        employee_id_label = Label(top_frame, text="Employee Id", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         employee_id_label.grid(row=9, column=0, padx=10, pady=15)
 
-        education_entry = ttk.Entry(left_frame, textvariable=self.var_employee_id,font=(Constants.Add_Employee_font , 15 ), width=22)
+        education_entry = ttk.Entry(top_frame, textvariable=self.var_employee_id,font=(Constants.Add_Employee_font , 15 ), width=22)
         education_entry.grid(row=9, column=1, padx=10, pady=15, sticky=tk.W)
 
         #radio_buttons1
-        radiobtn1=Radiobutton(left_frame,variable=self.var_radio1,text="Take Photos",font=(Constants.Add_Employee_font ,15),value="yes",bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        radiobtn1=Radiobutton(top_frame,variable=self.var_radio1,text="Take Photos",font=(Constants.Add_Employee_font ,15),value="yes",bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         radiobtn1.grid(row=10,column=0)
 
         #radio_buttons2
-        radiobtn2=Radiobutton(left_frame,variable=self.var_radio1,text="No Photos",font=(Constants.Add_Employee_font ,15), value="no",bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
+        radiobtn2=Radiobutton(top_frame,variable=self.var_radio1,text="No Photos",font=(Constants.Add_Employee_font ,15), value="no",bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         radiobtn2.grid(row=10,column=1)
 
         #button_frame
-        btn_frame = Frame(left_frame,bg=Constants.content_background_color)
+        btn_frame = Frame(top_frame,bg=Constants.content_background_color)
         btn_frame.place(x=40, y=270, width=1100, height=50)
 
         #save_button
@@ -184,16 +184,16 @@ class AddEmployee:
         white_space.grid(row=0,column=10)
 
         #update_button
-        update_photo_btn=Button(btn_frame, text="Update Photo Samples",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
-        update_photo_btn.grid(row=0,column=11)
+        # update_photo_btn=Button(btn_frame, text="Update Photo Samples",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
+        # update_photo_btn.grid(row=0,column=11)
 
 
-        #Right Frame
-        right_frame = LabelFrame(bg_img,bd=10,bg=Constants.content_background_color,fg=Constants.frame_content_text_color,text="Employee Details",relief=RIDGE, font=("times new roman", 18 ))
-        right_frame.place(x=45, y=440, width=1227, height=400)
+        #bottom Frame
+        bottom_frame = LabelFrame(bg_img,bd=10,bg=Constants.content_background_color,fg=Constants.frame_content_text_color,text="Employee Details",relief=RIDGE, font=("times new roman", 18 ))
+        bottom_frame.place(x=45, y=440, width=1227, height=400)
 
         #search system  
-        search_frame = LabelFrame(right_frame,bd=2,bg=Constants.content_background_color,fg=Constants.frame_content_text_color,text="Search by system",relief=RIDGE, font=("times new roman", 15 ))
+        search_frame = LabelFrame(bottom_frame,bd=2,bg=Constants.content_background_color,fg=Constants.frame_content_text_color,text="Search by system",relief=RIDGE, font=("times new roman", 15 ))
         search_frame.place(x=10, y=10, width=1190, height=80)
         
         search_label = Label(search_frame, text="Search By:", font=(Constants.Add_Employee_font, 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
@@ -217,7 +217,7 @@ class AddEmployee:
         showAll_btn.grid(row=0,column=5)
 
         #table frame
-        table_frame = Frame(right_frame,bd=2, bg= "white" ,relief=RIDGE )
+        table_frame = Frame(bottom_frame,bd=2, bg= "white" ,relief=RIDGE )
         table_frame.place(x=10, y=100, width=1200, height=250)
         
         scroll_x=ttk.Scrollbar(table_frame, orient="horizontal")
