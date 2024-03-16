@@ -506,12 +506,19 @@ class AddEmployee:
     def validate_form(self):
         email = self.var_email.get()
         phone = self.var_phone_number.get()
+        emergency_contact=self.var_Emergency_contact.get()
+        salary= self.var_salary.get()
 
         if not self.validate_email(email):
             messagebox.showerror("Error", "Invalid Email Address")
             return False
         elif not self.validate_phone(phone):
             messagebox.showerror("Error", "Invalid Phone Number")
+        elif not self.validate_phone(emergency_contact):
+            messagebox.showerror("Error", "Invalid Emergency Contact")
+        elif not self.validate_salary(salary):
+            messagebox.showerror("Error", "Salary contains only numerical number")
+
         else:
             return True
             
@@ -524,6 +531,11 @@ class AddEmployee:
         # Simple phone number validation: 10 digits, no characters
         regex = r"^\d{10}$"
         return re.match(regex, phone)
+    
+    def validate_salary(self,salary):
+        regex=r"[0-9]"
+        return re.match(regex,salary)
+
     
     
 
