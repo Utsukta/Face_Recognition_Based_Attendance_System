@@ -585,6 +585,11 @@ class AddEmployee:
                 for i in rows:
                     #  print(i)
                      self.employee_table.insert("",END, values=i)
+        elif(search_combo_value=="Department"):
+            data = self.employee_table.get_children()
+            for item in data:
+                 values = self.employee_table.item(item, 'values')
+                 print(values)
             
             # print(value)
 
