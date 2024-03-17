@@ -514,6 +514,7 @@ class AddEmployee:
         phone = self.var_phone_number.get()
         emergency_contact=self.var_Emergency_contact.get()
         salary= self.var_salary.get()
+        joined_date=self.var_joined_date.get()
 
         if not self.validate_email(email):
             messagebox.showerror("Error", "Invalid Email Address")
@@ -524,6 +525,9 @@ class AddEmployee:
             messagebox.showerror("Error", "Invalid Emergency Contact")
         elif not self.validate_salary(salary):
             messagebox.showerror("Error", "Salary contains only numerical number")
+        elif not self.validate_joined_date(joined_date):
+            messagebox.showerror("Error", "Correct format for date is DD-MM-YYYY")
+            
 
         else:
             return True
@@ -541,10 +545,10 @@ class AddEmployee:
     def validate_salary(self,salary):
         regex=r"[0-9]"
         return re.match(regex,salary)
-
     
-    
-
+    def validate_joined_date(self,date):
+        regex=r"^(3[01]|[12][0-9]|0?[1-9])(\-)(1[0-2]|0?[1-9])\2([0-9]{2})?[0-9]{2}$"
+        return re.match(regex,date)
             
 if __name__ == "__main__":
     root = tk.Tk()
