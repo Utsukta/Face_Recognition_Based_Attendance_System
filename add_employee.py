@@ -30,6 +30,10 @@ class AddEmployee:
         self.var_Emergency_contact=StringVar()
         self.var_employee_id=StringVar()
         self.var_radio1=StringVar()
+
+        #For searching
+        self.var_search_combo=StringVar()
+        self.var_search_entry=StringVar()
  
         
         #Background Image
@@ -195,12 +199,12 @@ class AddEmployee:
         search_label = Label(search_frame, text="Search By:", font=(Constants.Add_Employee_font, 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         search_label.grid(row=0, column=0, padx=10, pady=15)
         
-        search_combo = ttk.Combobox(search_frame, font=(Constants.Add_Employee_font , 15, "bold"), width=28, state="readonly")
+        search_combo = ttk.Combobox(search_frame, font=(Constants.Add_Employee_font , 15, "bold"),textvariable=self.var_search_combo, width=28, state="readonly")
         search_combo["values"] = ( "select", "Name","Mobile number","Department")
         search_combo.current(0)
         search_combo.grid(row=0, column=1, padx=2, pady=15, sticky=tk.W)
        
-        search_entry = ttk.Entry(search_frame, font=(Constants.Add_Employee_font , 15 ), width=22)
+        search_entry = ttk.Entry(search_frame, font=(Constants.Add_Employee_font , 15 ),textvariable=self.var_search_entry, width=22)
         search_entry.grid(row=0, column=2, padx=10, pady=15, sticky=tk.W)
 
         search_btn=Button(search_frame, text="Search",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
@@ -530,8 +534,6 @@ class AddEmployee:
             messagebox.showerror("Error", "Correct format for date is DD-MM-YYYY")
         elif not self.compare_dates(joined_date):
             messagebox.showerror("Error", "Future joined date is not valid")
-            
-
         else:
             return True
             
@@ -552,7 +554,7 @@ class AddEmployee:
     def validate_joined_date(self,date):
         regex=r"^(3[01]|[12][0-9]|0?[1-9])(\-)(1[0-2]|0?[1-9])\2([0-9]{2})?[0-9]{2}$"
         return re.match(regex,date)
-    
+     
     def compare_dates(self,date):
         print(date)
         given_date=datetime.datetime.strptime(date,"%d-%m-%Y").date()
