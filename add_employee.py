@@ -1,3 +1,4 @@
+from calendar import Calendar
 import os
 import re
 import tkinter as tk
@@ -88,19 +89,12 @@ class AddEmployee:
         joined_label.grid(row=1, column=4, padx=10, pady=15)
 
 
-        joined_entry = DateEntry(top_frame, textvariable=self.var_joined_date, date_pattern='yyyy-mm-dd', background='darkblue', foreground='white', selectbackground='lightgray', selectforeground='black', bordercolor='white', othermonthforeground='gray50', othermonthbackground='gray10', arrowscolor='white')
-        joined_entry.grid(row=1, column=5, padx=10, pady=15)
+        # joined_entry = DateEntry(top_frame, textvariable=self.var_joined_date, date_pattern='yyyy-mm-dd', background='darkblue', foreground='white', selectbackground='lightgray', selectforeground='black', bordercolor='white', othermonthforeground='gray50', othermonthbackground='gray10', arrowscolor='white')
+        # joined_entry.grid(row=1, column=5, padx=10, pady=15)
 
-       
-        
 
-        # self.var_joined_date.set(2000/10/2)
-
-        # joined_entry = Calendar(left_frame, textvariable=self.var_joined_date,font=(Constants.Add_Employee_font , 15 ),selectmode='day', locale='en_US', date_pattern='yyyy-mm-dd')
-        # joined_entry.grid(row=1, column=5, padx=10, pady=15, sticky=tk.W)
-
-        # joined_entry = ttk.Entry(left_frame, textvariable=self.var_joined_date,font=(Constants.Add_Employee_font , 15 ), width=22)
-        # joined_entry.grid(row=1, column=5, padx=10, pady=15, sticky=tk.W)
+        joined_entry = ttk.Entry(top_frame, textvariable=self.var_joined_date,font=(Constants.Add_Employee_font , 15 ), width=22)
+        joined_entry.grid(row=1, column=5, padx=10, pady=15, sticky=tk.W)
 
         # Department
         dep_label = Label(top_frame, text="Department", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
