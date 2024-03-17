@@ -200,14 +200,14 @@ class AddEmployee:
         search_label.grid(row=0, column=0, padx=10, pady=15)
         
         search_combo = ttk.Combobox(search_frame, font=(Constants.Add_Employee_font , 15, "bold"),textvariable=self.var_search_combo, width=28, state="readonly")
-        search_combo["values"] = ( "select", "Name","Mobile number","Department")
+        search_combo["values"] = ( "Select", "Name","Mobile number","Department")
         search_combo.current(0)
         search_combo.grid(row=0, column=1, padx=2, pady=15, sticky=tk.W)
        
         search_entry = ttk.Entry(search_frame, font=(Constants.Add_Employee_font , 15 ),textvariable=self.var_search_entry, width=22)
         search_entry.grid(row=0, column=2, padx=10, pady=15, sticky=tk.W)
 
-        search_btn=Button(search_frame, text="Search",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
+        search_btn=Button(search_frame, text="Search",font=(Constants.Add_Employee_font ,15),command=self.search,highlightthickness=0)
         search_btn.grid(row=0,column=3)
         
         white_space=Label(search_frame,bg=Constants.content_background_color, width=3)
@@ -565,6 +565,29 @@ class AddEmployee:
             return False
         else:
             return True
+    
+    def search(self):
+        search_combo_value=self.var_search_combo.get()
+        search_entry_value=self.var_search_entry.get()
+        # print(search_combo_value +"and"+ search_entry_value)
+        if(search_combo_value=="Select" and search_entry_value==""):
+            pass
+        elif(search_combo_value=="Name"):
+            conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
+            my_curser=conn.cursor()
+            my_curser.execute("SELECT * FROM employee WHERE Name='%s'" %search_entry_value)
+            # entry_val=(self.var_search_entry.get(),)
+            # value=my_curser.execute(sql,entry_val)
+            rows=my_curser.fetchall()
+            # print(rows)
+            if len(rows)!=0:
+                self.employee_table.delete(*self.employee_table.get_children())
+                for i in rows:
+                    #  print(i)
+                     self.employee_table.insert("",END, values=i)
+            
+            # print(value)
+
     
             
 if __name__ == "__main__":
