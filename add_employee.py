@@ -1,4 +1,5 @@
 from calendar import Calendar
+import datetime
 import os
 import re
 import tkinter as tk
@@ -527,6 +528,8 @@ class AddEmployee:
             messagebox.showerror("Error", "Salary contains only numerical number")
         elif not self.validate_joined_date(joined_date):
             messagebox.showerror("Error", "Correct format for date is DD-MM-YYYY")
+        elif not self.compare_dates(joined_date):
+            messagebox.showerror("Error", "Future joined date is not valid")
             
 
         else:
@@ -549,6 +552,18 @@ class AddEmployee:
     def validate_joined_date(self,date):
         regex=r"^(3[01]|[12][0-9]|0?[1-9])(\-)(1[0-2]|0?[1-9])\2([0-9]{2})?[0-9]{2}$"
         return re.match(regex,date)
+    
+    def compare_dates(self,date):
+        print(date)
+        given_date=datetime.datetime.strptime(date,"%d-%m-%Y").date()
+        print(given_date)
+        current_date=datetime.date.today()
+        print(current_date)
+        if(given_date>current_date):
+            return False
+        else:
+            return True
+    
             
 if __name__ == "__main__":
     root = tk.Tk()
