@@ -20,17 +20,24 @@ class Facerecognition:
         bg_img= Label(self.root, image=self.photoimg)
         bg_img.place(x=150,y=0, width=1280,height=900)
 
-         # instance of shared
+        # instance of shared
         from shared import Shared
         self.shared = Shared(self.root)
 
-         #button_frame
-        btn_frame = Frame(root)
-        btn_frame.place(x=700, y=270, width=150, height=25)
+        img1 = Image.open("../Face_recogniton_system/Images/recognition.jpg")
+        img1=img1.resize((1280,900), Image.Resampling.LANCZOS)
+        self.photoimg1 = ImageTk.PhotoImage(img1)
+        bg_img1= Label(self.root, image=self.photoimg1)
+        # bg_img1.place(x=500,y=50, width=600,height=600)
+        bg_img1.place(x=190,y=0, width=1280,height=900)
 
-        #save_button
-        save_btn=Button(btn_frame, text="Face Detector",command=self.face_recognizer,font=(Constants.Add_Employee_font ,15),highlightthickness=0)
-        save_btn.grid(row=0,column=1)
+        #button_frame
+        btn_frame = Frame(root)
+        btn_frame.place(x=800, y=650, width=175, height=30)
+
+        #face_detector_button
+        detector_btn=Button(btn_frame, text="Face Recognition",command=self.face_recognizer,font=(Constants.Add_Employee_font ,20),highlightthickness=0)
+        detector_btn.grid(row=0,column=1)
 
 
 #Marks attendance and saves it in the attendance.csv
@@ -41,9 +48,11 @@ class Facerecognition:
             for line in myDataList:
                 entry=line.split((","))
                 name_list.append(entry[0])
-            if ((i not in name_list) and (n not in name_list) and (d not in name_list) and (e not in name_list)):
+            if all(field is not None for field in [i, n, d, e]) and ((i not in name_list) and (n not in name_list) and (d not in name_list) and (e not in name_list)):
                 now=datetime.now()
                 d1=now.strftime("%d\%m\%Y")
+                # d1 = now.strftime("%d%%m%%Y")
+                # d1=now.strftime("%d\%m\%Y")
                 dfstring=now.strftime("%H:%M:%S")
                 f.writelines(f"\n{i},{n},{d},{e},{dfstring},{d1},Present")
         
@@ -65,37 +74,58 @@ class Facerecognition:
                 confidence=int((100*(1-predict/300)))
                 # confidence=(float("%.2f" %(id)))
 
+                
+
                 conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
                 my_cursor=conn.cursor()
                 my_cursor.execute("SELECT Name from employee WHERE employee_id="+str((id)))
+                
                 n=my_cursor.fetchone()
-                n="+".join(n)
+                if n is not None:
+                 n="+".join(n)
                 # n = "+".join([str(n)])
-                print(n)
+                # print(n)
 
 
                 my_cursor.execute("SELECT employee_id from employee WHERE employee_id="+str((id)))
                 i=my_cursor.fetchone()
                 # i = "+".join([str(i)])
-                i="+".join(i)
+                if i is not None:
+                 i="+".join(i)
+                
+                # i="+".join(i)
 
                 my_cursor.execute("SELECT department from employee WHERE employee_id="+str((id)))
                 d=my_cursor.fetchone()
+                if d is not None:
+                 d="+".join(d)
                 # d = "+".join([str(d)])
-                d="+".join(d)
+                # d="+".join(d)
 
                 my_cursor.execute("SELECT email from employee WHERE employee_id="+str((id)))
                 e=my_cursor.fetchone()
+                if e is not None:
+                 e="+".join(e)
                 # e = "+".join([str(e)])
-                e="+".join(e)
+                # e="+".join(e)
              
 
-                if confidence>77:
+                if confidence>90:
+                    # if i is not None and n is not None and d is not None and e is not None:
+                     
                     cv2.putText(img,f"Employee ID:{i}",(x,y-80),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
                     cv2.putText(img,f"Name:{n}",(x,y-55),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
-                    cv2.putText(img,f"department:{d}",(x,y-30),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
+                    cv2.putText(img,f"Department:{d}",(x,y-30),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
                     cv2.putText(img,f"Emaill Address:{e}",(x,y-5),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
                     self.mark_attendence(i,n,d,e)
+                elif confidence<90:
+                   cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,255),3)
+                   cv2.putText(img,"Unknown Face",(x,y-5),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
+
+                    # if i is not None and n is not None and d is not None and e is not None:
+                     
+
+             
 
                 else:
                     cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,255),3)
