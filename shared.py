@@ -38,29 +38,29 @@ class Shared:
         Add_Employee_label.place(x=35, y=190)
 
         #Employee Details Label
-        Add_Employee_details_label= Label( text="Employee Details",bg=Constants.shared_background_color,foreground=Constants.shared_text_color )
-        Add_Employee_details_label.bind("<Button>",self.on_employee_details_label_clicked)
-        Add_Employee_details_label.place(x=35, y=230)
+        # Add_Employee_details_label= Label( text="Employee Details",bg=Constants.shared_background_color,foreground=Constants.shared_text_color )
+        # Add_Employee_details_label.bind("<Button>",self.on_employee_details_label_clicked)
+        # Add_Employee_details_label.place(x=35, y=230)
 
         #Photos Label
         Photos_label= Label( text="Photos",bg=Constants.shared_background_color,foreground=Constants.shared_text_color )
         Photos_label.bind("<Button>",self.on_photos_label_clicked)
-        Photos_label.place(x=35, y=270)
+        Photos_label.place(x=35, y=230)
 
         #Train Data Label
         Train_Data_label= Label( text="Train Data",bg=Constants.shared_background_color,foreground=Constants.shared_text_color )
         Train_Data_label.bind("<Button>",self.on_train_data_label_clicked)
-        Train_Data_label.place(x=35, y=310)
+        Train_Data_label.place(x=35, y=270)
 
         #Face Recognition Label
         Face_Recognition_label= Label( text="Face Recognition",bg=Constants.shared_background_color,foreground=Constants.shared_text_color )
         Face_Recognition_label.bind("<Button>",self.on_face_recognition_label_clicked)
-        Face_Recognition_label.place(x=35, y=350)
+        Face_Recognition_label.place(x=35, y=310)
 
         #Attendance Label
         Attendance_label= Label( text="Attendance",bg=Constants.shared_background_color,foreground=Constants.shared_text_color )
         Attendance_label.bind("<Button>",self.on_attendance_label_clicked)
-        Attendance_label.place(x=35, y=390)
+        Attendance_label.place(x=35, y=350)
 
         #Exit Label
         Exit_label= Label( text="Exit",bg=Constants.shared_background_color,foreground=Constants.shared_text_color )
@@ -76,11 +76,11 @@ class Shared:
             self.app=AddEmployee(self.root)
             # self.root.iconify()
             print("clicked emploee")
-    def on_employee_details_label_clicked(self,event):
-        #     self.new_window=Toplevel(self.root)
-            self.app=Employee_Details(self.root)
-            # self.root.withdraw()
-            print("clicked details") 
+#     def on_employee_details_label_clicked(self,event):
+#         #     self.new_window=Toplevel(self.root)
+#             self.app=Employee_Details(self.root)
+#             # self.root.withdraw()
+#             print("clicked details") 
     def on_photos_label_clicked(self,event):
             self.app=Photos(self.root)
             
