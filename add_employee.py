@@ -200,7 +200,7 @@ class AddEmployee:
         search_label.grid(row=0, column=0, padx=10, pady=15)
         
         search_combo = ttk.Combobox(search_frame, font=(Constants.Add_Employee_font , 15, "bold"),textvariable=self.var_search_combo, width=28, state="readonly")
-        search_combo["values"] = ( "Select", "Name","Mobile number","Department")
+        search_combo["values"] = ( "Select", "Department","Name","Phone number","Email")
         search_combo.current(0)
         search_combo.grid(row=0, column=1, padx=2, pady=15, sticky=tk.W)
        
@@ -213,8 +213,8 @@ class AddEmployee:
         white_space=Label(search_frame,bg=Constants.content_background_color, width=3)
         white_space.grid(row=0,column=4)
         
-        showAll_btn=Button(search_frame, text="Show All",font=(Constants.Add_Employee_font ,15),highlightthickness=0)
-        showAll_btn.grid(row=0,column=5)
+        clear_btn=Button(search_frame, text="Clear",font=(Constants.Add_Employee_font ,15),command=self.clear,highlightthickness=0)
+        clear_btn.grid(row=0,column=5)
 
         #table frame
         table_frame = Frame(bottom_frame,bd=2, bg= "white" ,relief=RIDGE )
@@ -570,28 +570,66 @@ class AddEmployee:
         search_combo_value=self.var_search_combo.get()
         search_entry_value=self.var_search_entry.get()
         # print(search_combo_value +"and"+ search_entry_value)
-        if(search_combo_value=="Select" and search_entry_value==""):
-            pass
-        elif(search_combo_value=="Name"):
-            conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
-            my_curser=conn.cursor()
-            my_curser.execute("SELECT * FROM employee WHERE Name='%s'" %search_entry_value)
-            # entry_val=(self.var_search_entry.get(),)
-            # value=my_curser.execute(sql,entry_val)
-            rows=my_curser.fetchall()
-            # print(rows)
-            if len(rows)!=0:
-                self.employee_table.delete(*self.employee_table.get_children())
-                for i in rows:
-                    #  print(i)
-                     self.employee_table.insert("",END, values=i)
-        elif(search_combo_value=="Department"):
-            data = self.employee_table.get_children()
-            for item in data:
-                 values = self.employee_table.item(item, 'values')
-                 print(values)
-            
-            # print(value)
+        conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
+        my_cursor=conn.cursor()
+        sql_query="SELECT * FROM employee WHERE 1=1"
+        if search_combo_value != "Select" and search_entry_value:
+            if search_combo_value == "Name":
+               sql_query += f" AND Name='{search_entry_value}'"
+            elif search_combo_value == "Department":
+               sql_query += f" AND department='{search_entry_value}'"
+            elif search_combo_value == "Phone number":
+               sql_query += f" AND Phone='{search_entry_value}'"
+            elif search_combo_value == "Email":
+               sql_query += f" AND email='{search_entry_value}'"
+        # if(search_combo_value=="Select" and search_entry_value==""):
+        #     sql_query="SELECT * FROM employee"
+        # elif(search_combo_value=="Name"):
+        #     sql_query="SELECT * FROM employee WHERE Name='%s'" %search_entry_value
+        # elif(search_combo_value=="Department"):
+        #     sql_query="SELECT * FROM employee WHERE department='%s'" %search_entry_value
+        # elif(search_combo_value=="Phone number"):
+        #     sql_query="SELECT * FROM employee WHERE Phone='%s'" %search_entry_value
+        # elif(search_combo_value=="Email"):
+        #     sql_query="SELECT * FROM employee WHERE email='%s'" %search_entry_value
+        my_cursor.execute(sql_query)
+        rows=my_cursor.fetchall()
+        if len(rows)!=0:
+            self.employee_table.delete(*self.employee_table.get_children())
+            for i in rows:
+                print(i)
+                self.employee_table.insert("",END, values=i)
+            #linear searching algorithm
+            # data = self.employee_table.get_children()
+            # arrays=[]
+            # for item in data:
+            #      values = self.employee_table.item(item, 'values')
+            #      arrays.append((values))
+            # for row in arrays:
+            #     if search_entry_value in row:
+            #         print(row)
+            #         self.employee_table.delete(*self.employee_table.get_children())
+            #         self.employee_table.insert("",END, values=row)
+                     
+    def clear(self):
+        self.var_search_combo.set("Select")
+        self.var_search_entry.set("")
+        conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
+        my_cursor=conn.cursor()
+        my_cursor.execute("SELECT * FROM employee")
+        rows=my_cursor.fetchall()
+        if len(rows)!=0:
+            self.employee_table.delete(*self.employee_table.get_children())
+            for i in rows:
+                self.employee_table.insert("",END, values=i)
+                
+
+
+
+
+
+
+              
 
     
             
