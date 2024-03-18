@@ -1,15 +1,13 @@
-from calendar import Calendar
 import datetime
 import os
 import re
 import tkinter as tk
-from tkinter import END, Button, Label, LabelFrame, Frame, RIDGE, Radiobutton, StringVar, Text, ttk,messagebox
+from tkinter import END, Button, Label, LabelFrame, Frame, RIDGE, Radiobutton, StringVar,ttk,messagebox
 from tkinter import Entry
 from PIL import Image, ImageTk
 from constants import Constants
 import mysql.connector
 import cv2
-from tkcalendar import DateEntry
 
 class AddEmployee:
     def __init__(self, root):
@@ -622,16 +620,7 @@ class AddEmployee:
             self.employee_table.delete(*self.employee_table.get_children())
             for i in rows:
                 self.employee_table.insert("",END, values=i)
-                
 
-
-
-
-
-
-              
-
-    
             
 if __name__ == "__main__":
     root = tk.Tk()
