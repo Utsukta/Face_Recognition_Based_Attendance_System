@@ -1,4 +1,6 @@
 import os
+import subprocess
+import sys
 import tkinter as tk
 from tkinter import END, Button, Label, LabelFrame, Frame, RIDGE, Radiobutton, StringVar, Text, ttk,messagebox
 from PIL import Image, ImageTk
@@ -31,12 +33,25 @@ class Photos:
         save_btn.grid(row=0,column=1)
 
 
+    # def open_img(self):
+    #     folder_path = os.path.join(os.getcwd(), "data") # Assuming "data" folder is in the same directory as the script
+    #     if os.path.exists(folder_path):
+    #         os.system(f'open "{folder_path}"') 
+    #     else:
+    #         print("Error: Folder not found.")
     def open_img(self):
-        folder_path = os.path.join(os.getcwd(), "data") # Assuming "data" folder is in the same directory as the script
-        if os.path.exists(folder_path):
-            os.system(f'open "{folder_path}"') 
-        else:
-            print("Error: Folder not found.")
+        folder_path = os.path.join(os.getcwd(), "data")  # Assuming "data" folder is in the same directory as the script
+        try:
+            if os.path.exists(folder_path):
+                if os.name == 'nt':  # For Windows
+                    os.startfile(folder_path)
+                elif os.name == 'posix':  # For Linux and macOS
+                    opener = "open" if sys.platform == "darwin" else "xdg-open"
+                    subprocess.call([opener, folder_path])
+            else:
+                raise FileNotFoundError("Folder not found.")
+        except Exception as e:
+            messagebox.showerror("Error", str(e))
       
 
 
