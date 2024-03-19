@@ -15,10 +15,16 @@ class Train:
         self.root.maxsize(1440,900)
 
         img = Image.open("../Face_recogniton_system/Images/splash-bg.png")
-        img=img.resize((1280,900), Image.Resampling.LANCZOS)
+        img=img.resize((1290,900), Image.Resampling.LANCZOS)
         self.photoimg = ImageTk.PhotoImage(img)
         bg_img= Label(self.root, image=self.photoimg)
-        bg_img.place(x=150,y=0, width=1280,height=900)
+        bg_img.place(x=150,y=0, width=1300,height=900)
+
+        img1 = Image.open("../Face_recogniton_system/Images/train_bg.png")
+        img1=img1.resize((1280,900), Image.Resampling.LANCZOS)
+        self.photoimg1 = ImageTk.PhotoImage(img1)
+        bg_img1= Label(self.root, image=self.photoimg1)
+        bg_img1.place(x=150,y=0, width=1300,height=900)
 
          # instance of shared
         from shared import Shared
@@ -26,11 +32,11 @@ class Train:
 
          #button_frame
         btn_frame = Frame(root)
-        btn_frame.place(x=700, y=270, width=150, height=25)
+        btn_frame.place(x=780, y=80, width=120, height=30)
 
-        #save_button
-        save_btn=Button(btn_frame, text="Train Data",command=self.train_classifier,font=(Constants.Add_Employee_font ,15),highlightthickness=0)
-        save_btn.grid(row=0,column=1)
+        #train_button
+        train_btn=Button(btn_frame, text="Train Data",command=self.train_classifier,font=(Constants.Add_Employee_font ,20),highlightthickness=0)
+        train_btn.grid(row=0,column=1)
 
     def train_classifier(self):
         data_dir=("data")
