@@ -35,7 +35,7 @@ class AddEmployee:
  
         
         #Background Image
-        img = Image.open("../Face_recogniton_system/Images/splash-bg.png")
+        img = Image.open("../Face_recogniton_system/Images/bg.png")
         img=img.resize((1280,900), Image.Resampling.LANCZOS)
         self.photoimg = ImageTk.PhotoImage(img)
         bg_img= Label(self.root, image=self.photoimg)
@@ -600,6 +600,8 @@ class AddEmployee:
             for i in rows:
                 print(i)
                 self.employee_table.insert("",END, values=i)
+        else:
+            self.employee_table.delete(*self.employee_table.get_children())
             #linear searching algorithm
             # data = self.employee_table.get_children()
             # arrays=[]
