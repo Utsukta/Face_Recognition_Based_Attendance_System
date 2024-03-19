@@ -14,11 +14,19 @@ class Photos:
         self.root.minsize(1440, 900)
         self.root.maxsize(1440,900)
 
-        img = Image.open("../Face_recogniton_system/Images/splash-bg.png")
+        #Background Image
+        img = Image.open("/Users/utsuktakhatri/Desktop/Face_recogniton_system/Images/photo_bg.png")
         img=img.resize((1280,900), Image.Resampling.LANCZOS)
         self.photoimg = ImageTk.PhotoImage(img)
         bg_img= Label(self.root, image=self.photoimg)
         bg_img.place(x=150,y=0, width=1280,height=900)
+
+
+        # img1 = Image.open("../Face_recogniton_system/Images/facial-recognition-attendance-system.png")
+        # img1=img1.resize((500,400), Image.Resampling.LANCZOS)
+        # self.photoimg1 = ImageTk.PhotoImage(img1)
+        # bg_img1= Label(self.root, image=self.photoimg1)
+        # bg_img1.place(x=500,y=0,width=370,height=400)
 
          # instance of shared
         from shared import Shared
@@ -26,10 +34,10 @@ class Photos:
 
          #button_frame
         btn_frame = Frame(root)
-        btn_frame.place(x=700, y=270, width=150, height=25)
+        btn_frame.place(x=700, y=300, width=200, height=30)
 
         #save_button
-        save_btn=Button(btn_frame, text="Open the photo folder",command=self.open_img,font=(Constants.Add_Employee_font ,15),highlightthickness=0)
+        save_btn=Button(btn_frame, text="Open the photo folder",command=self.open_img,font=(Constants.Add_Employee_font ,20),highlightthickness=0)
         save_btn.grid(row=0,column=1)
 
 
