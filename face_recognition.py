@@ -24,7 +24,7 @@ class Facerecognition:
         from shared import Shared
         self.shared = Shared(self.root)
 
-        img1 = Image.open("../Face_recogniton_system/Images/recognition.jpg")
+        img1 = Image.open("../Face_recogniton_system/Images/recognition.png")
         img1=img1.resize((1280,900), Image.Resampling.LANCZOS)
         self.photoimg1 = ImageTk.PhotoImage(img1)
         bg_img1= Label(self.root, image=self.photoimg1)
@@ -33,12 +33,11 @@ class Facerecognition:
 
         #button_frame
         btn_frame = Frame(root)
-        btn_frame.place(x=800, y=650, width=175, height=30)
+        btn_frame.place(x=750, y=600, width=175, height=30)
 
         #face_detector_button
         detector_btn=Button(btn_frame, text="Face Recognition",command=self.face_recognizer,font=(Constants.Add_Employee_font ,20),highlightthickness=0)
         detector_btn.grid(row=0,column=1)
-
 
 #Marks attendance and saves it in the attendance.csv
     def mark_attendence(self,i,n,d,e):
@@ -110,7 +109,7 @@ class Facerecognition:
                 # e="+".join(e)
              
 
-                if confidence>90:
+                if confidence>80:
                     # if i is not None and n is not None and d is not None and e is not None:
                      
                     cv2.putText(img,f"Employee ID:{i}",(x,y-80),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
