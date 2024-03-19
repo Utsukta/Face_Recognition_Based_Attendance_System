@@ -3,7 +3,6 @@ import os
 import re
 import tkinter as tk
 from tkinter import END, Button, Label, LabelFrame, Frame, RIDGE, Radiobutton, StringVar,ttk,messagebox
-from tkinter import Entry
 from PIL import Image, ImageTk
 from constants import Constants
 import mysql.connector
@@ -304,16 +303,13 @@ class AddEmployee:
      else:
           self.employee_table.delete(*self.employee_table.get_children())
      conn.close()
-
-         
-            
+      
      #============get cursor===========#    
     def get_cursor(self , event=""):
         cursor_focus=self.employee_table.focus()
         content=self.employee_table.item(cursor_focus)
         data=content["values"]
-        print(data)
-        if len(data) >= 11:
+        if len(data)!=0:
 
          self.var_employee_id.set(data[0]),
          self.var_department.set(data[1]),
@@ -401,10 +397,12 @@ class AddEmployee:
                 else:
                  id=self.var_employee_id.get()
                  #Since 100 samples are taken
-                 for i in range(1,101): 
-                    # print(i)
-                    # print("exising is "+'data/user.'+id+'.'+str(i)+'.jpg')
-                    os.remove('data/user.'+id+'.'+str(i)+'.jpg')
+                 for i in range(1,101):
+                     file_path = 'data/user.' + id + '.' + str(i) + '.jpg'
+                     if os.path.exists(file_path):
+                        os.remove(file_path)
+                     else:
+                        pass
               
                 delete_sql="DELETE FROM employee WHERE employee_id=%s"
                 delete_val=(self.var_employee_id.get(),)
@@ -451,9 +449,6 @@ class AddEmployee:
                 my_curser.execute("SELECT * FROM employee")
                 my_result=my_curser.fetchall()
                 id=self.var_employee_id.get()
-                # id=0
-                # for x in my_result:
-                #      id+=1
                 my_curser.execute("Update employee set department=%s,Name=%s,Phone=%s,address=%s,email=%s,gender=%s,joined=%s,salary=%s,emergency_contact=%s,Photo_sample=%s where employee_id=%s",(
                         
                         self.var_department.get(),
@@ -536,8 +531,7 @@ class AddEmployee:
         elif not self.compare_dates(joined_date):
             messagebox.showerror("Error", "Future joined date is not valid")
         else:
-            return True
-            
+            return True  
 
     def validate_email(self, email):
         regex = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
@@ -625,8 +619,7 @@ class AddEmployee:
             self.employee_table.delete(*self.employee_table.get_children())
             for i in rows:
                 self.employee_table.insert("",END, values=i)
-
-            
+         
 if __name__ == "__main__":
     root = tk.Tk()
     AddEmployee_obj = AddEmployee(root)
