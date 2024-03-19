@@ -15,7 +15,7 @@ class Face_Recognition_Attendance_System:
         from shared import Shared
         self.shared_instance_main = Shared(self.root)
 
-        home_img=Image.open("../Face_recogniton_system/Images/aceecognitionpps163973557648.png")
+        home_img=Image.open("../Face_recogniton_system/Images/main_bg1.png")
         home_img=home_img.resize((1280, 900))
 
         self.home_img=ImageTk.PhotoImage(home_img)
