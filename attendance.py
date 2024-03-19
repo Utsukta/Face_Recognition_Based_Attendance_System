@@ -27,7 +27,7 @@ class Attendance:
  
         
         #Background Image
-        img = Image.open("../Face_recogniton_system/Images/splash-bg.png")
+        img = Image.open("../Face_recogniton_system/Images/bg.png")
         img=img.resize((1280,900), Image.Resampling.LANCZOS)
         self.photoimg = ImageTk.PhotoImage(img)
         bg_img= Label(self.root, image=self.photoimg)
