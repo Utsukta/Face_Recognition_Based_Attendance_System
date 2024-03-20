@@ -1,6 +1,7 @@
 from tkinter import *
 from PIL import Image, ImageTk
 from attendance import Attendance
+from attendance_sql import Attendancesql
 from constants import Constants
 from add_employee import AddEmployee 
 from employee_details import Employee_Details
@@ -62,17 +63,20 @@ class Shared:
         Attendance_label.bind("<Button>",self.on_attendance_label_clicked)
         Attendance_label.place(x=35, y=350)
 
+        #Attendance Label
+        Attendance_label1= Label( text="Attendancesql",bg=Constants.shared_background_color,foreground=Constants.shared_text_color )
+        Attendance_label1.bind("<Button>",self.on_attendance_label_clicked1)
+        Attendance_label1.place(x=35, y=400)
+
         #Exit Label
         Exit_label= Label( text="Exit",bg=Constants.shared_background_color,foreground=Constants.shared_text_color )
-        Exit_label.bind("<Button>",self.on_attendance_label_clicked)
+        Exit_label.bind("<Button>",self.on_Exit_label_clicked)
         Exit_label.place(x=35, y=750)
 
     def on_home_label_clicked(self,event):
             self.instancee= Face_Recognition_Attendance_System(self.root)
             print("clicked home")
     def on_add_employee_label_clicked(self,event):
-            # self.root.withdraw()
-        #     self.new_window=Toplevel(self.root)
             self.app=AddEmployee(self.root)
             # self.root.iconify()
             print("clicked emploee")
@@ -93,9 +97,17 @@ class Shared:
             print("clicked face recognition")
     def on_attendance_label_clicked(self,event):
             self.app=Attendance(self.root)
-            print("clicked attendance")   
-    def on_Exit_label_clicked(event):
+            print("clicked attendance") 
+    def on_attendance_label_clicked1(self,event):
+            self.app=Attendancesql(self.root)
+            print("clicked attendance")    
+    def on_Exit_label_clicked(self,event):
             print("clicked exit")
+            self.root.destroy()  # Close the Tkinter root window
+            # Built-in function in Python that terminates the current process.
+            #It's commonly used to terminate a script or application. If not used this method
+            # the Python process will still be active in the background until the script completes or another termination condition is met.
+            exit()
    
 print("done")
 if __name__ == "__main__":
