@@ -279,6 +279,9 @@ class Attendance:
         self.importCsv()
      except Exception as e:
         messagebox.showerror("Error", f"Due to: {str(e)}", parent=self.root)
+    
+
+
             
 if __name__ == "__main__":
     root = tk.Tk()
