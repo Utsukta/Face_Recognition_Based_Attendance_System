@@ -48,33 +48,50 @@ class Facerecognition:
             for line in myDataList:
                 entry=line.split((","))
                 name_list.append(entry[0])
-            if all(field is not None for field in [i, n, d, e]) and ((i not in name_list) and (n not in name_list) and (d not in name_list) and (e not in name_list)):
+                date_fromCsv = line.split(",")[5]
+            # if all(field is not None for field in [i, n, d, e]) and set([i, n, d, e]).isdisjoint(name_list):
+            if all(field is not None for field in [i, n, d, e]) and (i not in name_list):
                 now=datetime.now()
-                d1=now.strftime("%d\%m\%Y")
-                # d1 = now.strftime("%d%%m%%Y")
-                # d1=now.strftime("%d\%m\%Y")
+                d1=now.strftime("%d-%m-%Y")
                 dfstring=now.strftime("%H:%M:%S")
-                f.writelines(f"\n{i},{n},{d},{e},{dfstring},{d1},Present")
-        
+                f.writelines(f"{i},{n},{d},{e},{dfstring},{d1},Present\n")
+                self.speech("Attendance marked Thank you")
+            else: 
+               now=datetime.now()
+               d1=now.strftime("%d-%m-%Y")
+               dfstring=now.strftime("%H:%M:%S")
+               if(i in name_list and d1==date_fromCsv):
+                  pass
+               elif (i in name_list and d1!=date_fromCsv):
+                   f.writelines(f"{i},{n},{d},{e},{dfstring},{d1},Present\n")
+                   self.speech("Attendance marked Thank you")             
+                    
+    def speech(self,text):     
+        import platform
+    # Check the operating system
+        if platform.system() == "Windows": 
+        # Code for Windows using pyttsx3
+           import pyttsx3
+           engine = pyttsx3.init()
+           engine.say(text)
+           engine.runAndWait()
+        elif platform.system() == "Darwin":  # macOS
+            import subprocess
+            subprocess.call(["say",text])
+     
 
     def face_recognizer(self):
         def draw_boundary(img,classifier,scaleFactor,minNeighbors,color,text,clf):
             gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             features=classifier.detectMultiScale(gray_image,scaleFactor,minNeighbors)
-
-
             coord=[]
-            
             #Coordinates to draw the rectangle
-
             for  (x,y,w,h) in features:
                 cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 3)
 
                 id,predict=clf.predict(gray_image[y:y+h, x:x+w])
                 confidence=int((100*(1-predict/300)))
                 # confidence=(float("%.2f" %(id)))
-
-                
 
                 conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
                 my_cursor=conn.cursor()
@@ -86,7 +103,6 @@ class Facerecognition:
                 # n = "+".join([str(n)])
                 # print(n)
 
-
                 my_cursor.execute("SELECT employee_id from employee WHERE employee_id="+str((id)))
                 i=my_cursor.fetchone()
                 # i = "+".join([str(i)])
@@ -94,7 +110,6 @@ class Facerecognition:
                  i="+".join(i)
                 
                 # i="+".join(i)
-
                 my_cursor.execute("SELECT department from employee WHERE employee_id="+str((id)))
                 d=my_cursor.fetchone()
                 if d is not None:
@@ -123,9 +138,6 @@ class Facerecognition:
                    cv2.putText(img,"Unknown Face",(x,y-5),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
 
                     # if i is not None and n is not None and d is not None and e is not None:
-                     
-
-             
 
                 else:
                     cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,255),3)
