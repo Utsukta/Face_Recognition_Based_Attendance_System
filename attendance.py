@@ -63,15 +63,12 @@ class Attendance:
         dep_entry = ttk.Entry(left_frame,textvariable=self.var_department, font=(Constants.Add_Employee_font , 15 ), width=22 )
         dep_entry.grid(row=0, column=5, padx=10, pady=15, sticky=tk.W)
 
-
         # Email Address
         email_label = Label(left_frame, text="Email Address", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
         email_label.grid(row=1, column=0, padx=10, pady=15)
 
         email_entry = ttk.Entry(left_frame,textvariable=self.var_email, font=(Constants.Add_Employee_font , 15 ), width=22 )
         email_entry.grid(row=1, column=1, padx=10, pady=15, sticky=tk.W)
-
-     
 
         # Department
         time_label = Label(left_frame, text="Time", font=(Constants.Add_Employee_font , 15, ),bg=Constants.content_background_color, fg=Constants.frame_content_text_color)
@@ -174,8 +171,6 @@ class Attendance:
         #Bind event with get_cursor method
         self.attendance_table.bind("<ButtonRelease>",self.get_cursor)
 
-       
-
     #================fetch data===============#
     def fetch_data(self,rows):
          self.attendance_table.delete(*self.attendance_table.get_children())
@@ -200,10 +195,8 @@ class Attendance:
         # print(data)
          self.var_employee_id.set(data[0]),
          self.var_name.set(data[1]),
-        
          self.var_department.set(data[2]),
          self.var_email.set(data[3]),
-        
          self.var_time.set(data[4]),
          self.var_date.set(data[5]),
          self.var_attendance_status.set(data[6]),
@@ -281,17 +274,11 @@ class Attendance:
 
         else:
             return  # Do nothing if the user chooses not to update
-
         messagebox.showinfo("Success", "Attendance details successfully updated", parent=self.root)
-
         # Update the table with the new data from the CSV file
         self.importCsv()
-
      except Exception as e:
         messagebox.showerror("Error", f"Due to: {str(e)}", parent=self.root)
-
-
-
             
 if __name__ == "__main__":
     root = tk.Tk()
