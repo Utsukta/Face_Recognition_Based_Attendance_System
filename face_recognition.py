@@ -20,6 +20,7 @@ class Facerecognition:
         bg_img= Label(self.root, image=self.photoimg)
         bg_img.place(x=150,y=0, width=1280,height=900)
 
+
         # instance of shared
         from shared import Shared
         self.shared = Shared(self.root)
@@ -57,7 +58,7 @@ class Facerecognition:
                 self.speech("Attendance marked Thank you")
             else: 
                if line!=0:
-                date_fromCsv = line.split(",")[5]
+                   date_fromCsv = line.split(",")[5]
                now=datetime.now()
                d1=now.strftime("%d-%m-%Y")
                dfstring=now.strftime("%H:%M:%S")
@@ -83,29 +84,107 @@ class Facerecognition:
             subprocess.call(["say",text])
 
 
-#Test for database storing attendance
-    def attendance_mark(self,i,n,d,e):
-       try:
-          conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
-          my_cursor=conn.cursor()
-          my_cursor.execute("SELECT * FROM Attendance WHERE employee_id = %s", (i,))
-          result = my_cursor.fetchall()
-          if not result:
-                now=datetime.now()
-                d1=now.strftime("%d-%m-%Y")
-                dfstring=now.strftime("%H:%M:%S")  
-                my_cursor.execute("INSERT INTO Attendance (employee_id, name, department, email, time, date, Attendance_status) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+#Test for database storing attendance for database
+    def attendance_mark(self, i, n, d, e):
+     try:
+        now = datetime.now()
+        d1 = now.strftime("%d-%m-%Y")
+        dfstring = now.strftime("%H:%M:%S")
+
+        conn = mysql.connector.connect(host="localhost", username="root", password="Cre@ture12;", database="face_recognizer")
+        my_cursor = conn.cursor()
+
+        my_cursor.execute("SELECT * FROM Attendance WHERE employee_id = %s", (i,))
+        result = my_cursor.fetchall()
+
+        my_cursor.execute("SELECT date FROM Attendance WHERE employee_id = %s", (i,))
+        old_dates = [date_tuple[0] for date_tuple in my_cursor.fetchall()]
+
+        if not result:
+            # If no result is found, insert the new record
+            my_cursor.execute("INSERT INTO Attendance (employee_id, name, department, email, time, date, Attendance_status) VALUES (%s, %s, %s, %s, %s, %s, %s)",
                               (i, n, d, e, dfstring, d1, 'Present'))
+            conn.commit()
+            self.speech("Attendance Marked Thank you")
+            
+        else:
+            # If result is found, check if any of the dates match d1
+            date_match_found = False
+            for old_date_str in old_dates:
+                if old_date_str == d1:
+                    date_match_found = True
+                    break
+            
+            if not date_match_found:
+                # If no matching date is found, insert the new record
+                my_cursor.execute("INSERT INTO Attendance (employee_id, name, department, email, time, date, Attendance_status) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                                  (i, n, d, e, dfstring, d1, 'Present'))
                 conn.commit()
-                print("Attendance marked successfully")
-                print("already exists")
-          else:
-            pass
-          conn.close()
-       except Exception as e:
-          print(e)
-       finally:
-          conn.close()
+                self.speech("Attendance Marked Thank you")
+                
+            else:
+                # If a matching date is found, do nothing
+                pass
+        
+        conn.close()
+     except Exception as e:
+        print(e)
+
+
+    # def attendance_mark(self,i,n,d,e):
+    #    try:
+    #       now=datetime.now()
+    #       d1=now.strftime("%d-%m-%Y")
+    #       dfstring=now.strftime("%H:%M:%S") 
+
+    #       conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
+    #       my_cursor=conn.cursor()
+
+    #       my_cursor.execute("SELECT * FROM Attendance WHERE employee_id = %s", (i,))
+    #       result = my_cursor.fetchall()
+
+    #       my_cursor.execute("SELECT date FROM Attendance WHERE employee_id=%s",(i,)) 
+    #       old_date=my_cursor.fetchall()
+
+    #       old_dates = [date_tuple[0] for date_tuple in old_date]
+    #     #   print(old_dates)
+    #       for old_date_str in old_dates:
+    #          pass
+    #         #  print(old_date_str)
+    #       if not result:
+    #             # now=datetime.now()
+    #             # d1=now.strftime("%d-%m-%Y")
+    #             # dfstring=now.strftime("%H:%M:%S")  
+    #             my_cursor.execute("INSERT INTO Attendance (employee_id, name, department, email, time, date, Attendance_status) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+    #                           (i, n, d, e, dfstring, "10-02-2000", 'Present'))
+    #             conn.commit()
+    #             print("Attendance marked successfully")
+    #             print("already exists")
+    #       elif result and old_date_str!=d1:
+    #          print(1)
+    #         # my_cursor.execute("SELECT date FROM Attendance WHERE employee_id=%s",(i,)) 
+    #         # old_date=my_cursor.fetchall()
+    #         # print(old_date)
+    #         # # Extract the date string from each tuple in old_date
+    #         # old_dates = [date_tuple[0] for date_tuple in old_date]
+    #         # print(old_dates)
+    #         # for old_date_str in old_dates:
+    #         #    print(old_date_str)
+    #         # if result and old_date_str==d1:
+    #         #    pass
+    #         # elif result and old_date_str!=d1:
+    #         #    print("hello")
+        
+    #         #       my_cursor.execute("INSERT INTO Attendance (employee_id, name, department, email, time, date, Attendance_status) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+    #         #                   (i, n, d, e, dfstring, d1, 'Present'))
+    #         #       conn.commit()
+    #         #   else:
+    #         #       pass
+    #       conn.close()
+    #    except Exception as e:
+    #       print(e)
+    #    finally:
+    #       conn.close()
           
 
     # def attendance_mark(self, i, n, d, e):
