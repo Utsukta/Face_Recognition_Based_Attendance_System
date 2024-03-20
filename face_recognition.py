@@ -48,7 +48,6 @@ class Facerecognition:
             for line in myDataList:
                 entry=line.split((","))
                 name_list.append(entry[0])
-                date_fromCsv = line.split(",")[5]
             # if all(field is not None for field in [i, n, d, e]) and set([i, n, d, e]).isdisjoint(name_list):
             if all(field is not None for field in [i, n, d, e]) and (i not in name_list):
                 now=datetime.now()
@@ -57,6 +56,8 @@ class Facerecognition:
                 f.writelines(f"{i},{n},{d},{e},{dfstring},{d1},Present\n")
                 self.speech("Attendance marked Thank you")
             else: 
+               if line!=0:
+                date_fromCsv = line.split(",")[5]
                now=datetime.now()
                d1=now.strftime("%d-%m-%Y")
                dfstring=now.strftime("%H:%M:%S")
@@ -64,7 +65,9 @@ class Facerecognition:
                   pass
                elif (i in name_list and d1!=date_fromCsv):
                    f.writelines(f"{i},{n},{d},{e},{dfstring},{d1},Present\n")
-                   self.speech("Attendance marked Thank you")             
+                   self.speech("Attendance marked Thank you")   
+               else:
+                  pass          
                     
     def speech(self,text):     
         import platform
@@ -78,7 +81,57 @@ class Facerecognition:
         elif platform.system() == "Darwin":  # macOS
             import subprocess
             subprocess.call(["say",text])
-     
+
+
+#Test for database storing attendance
+    def attendance_mark(self,i,n,d,e):
+       try:
+          conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
+          my_cursor=conn.cursor()
+          my_cursor.execute("SELECT * FROM Attendance WHERE employee_id = %s", (i,))
+          result = my_cursor.fetchall()
+          if not result:
+                now=datetime.now()
+                d1=now.strftime("%d-%m-%Y")
+                dfstring=now.strftime("%H:%M:%S")  
+                my_cursor.execute("INSERT INTO Attendance (employee_id, name, department, email, time, date, Attendance_status) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                              (i, n, d, e, dfstring, d1, 'Present'))
+                conn.commit()
+                print("Attendance marked successfully")
+                print("already exists")
+          else:
+            pass
+          conn.close()
+       except Exception as e:
+          print(e)
+       finally:
+          conn.close()
+          
+
+    # def attendance_mark(self, i, n, d, e):
+    #  try:
+    #     conn = mysql.connector.connect(host="localhost", username="root", password="Cre@ture12;", database="face_recognizer")
+    #     my_cursor = conn.cursor()
+    #     # Check if the ID already exists in the Attendance table
+    #     my_cursor.execute("SELECT * FROM Attendance WHERE employee_id = %s", (i,))
+    #     result = my_cursor.fetchall()
+    #     # If the ID does not exist, insert the new record
+    #     if not result:
+    #         now = datetime.now()
+    #         d1 = now.strftime("%d-%m-%Y")
+    #         dfstring = now.strftime("%H:%M:%S")
+    #         my_cursor.execute("INSERT INTO Attendance (employee_id, name, department, email, time, date, Attendance_status) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+    #                           (i, n, d, e, dfstring, d1, 'Present'))
+    #         conn.commit()
+    #         print("Attendance marked successfully")
+    #     else:
+    #        pass
+           
+    #     # conn.commit()
+    #     conn.close()
+    #  except Exception as e:
+    #     print(e)
+
 
     def face_recognizer(self):
         def draw_boundary(img,classifier,scaleFactor,minNeighbors,color,text,clf):
@@ -126,14 +179,14 @@ class Facerecognition:
              
 
                 if confidence>80:
-                    # if i is not None and n is not None and d is not None and e is not None:
-                     
+                    # if i is not None and n is not None and d is not None and e is not None:  
                     cv2.putText(img,f"Employee ID:{i}",(x,y-80),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
                     cv2.putText(img,f"Name:{n}",(x,y-55),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
                     cv2.putText(img,f"Department:{d}",(x,y-30),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
                     cv2.putText(img,f"Emaill Address:{e}",(x,y-5),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
                     self.mark_attendence(i,n,d,e)
-                elif confidence<90:
+                    self.attendance_mark(i,n,d,e)
+                elif confidence<80:
                    cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,255),3)
                    cv2.putText(img,"Unknown Face",(x,y-5),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
 
