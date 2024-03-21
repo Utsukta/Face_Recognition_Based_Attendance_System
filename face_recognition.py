@@ -43,12 +43,18 @@ class Facerecognition:
 
 #Marks attendance and saves it in the attendance.csv
     def mark_attendence(self,i,n,d,e):
-        with open('attendance.csv',"r+",newline="\n") as f:
+        with open('attendance.csv',"r+") as f:
             myDataList=f.readlines()
+            #Datalyst gives all data in the form of list
+            # print(myDataList)
+
             name_list=[]
             for line in myDataList:
+                # print("line is"+line)
                 entry=line.split((","))
-                name_list.append(entry[0])
+                print(len(entry))
+                if len(entry) >= 6:
+                   name_list.append(entry[0])
             # if all(field is not None for field in [i, n, d, e]) and set([i, n, d, e]).isdisjoint(name_list):
             if all(field is not None for field in [i, n, d, e]) and (i not in name_list):
                 now=datetime.now()
@@ -57,18 +63,35 @@ class Facerecognition:
                 f.writelines(f"{i},{n},{d},{e},{dfstring},{d1},Present\n")
                 self.speech("Attendance marked Thank you")
             else: 
-               if line!=0:
-                   date_fromCsv = line.split(",")[5]
-               now=datetime.now()
-               d1=now.strftime("%d-%m-%Y")
-               dfstring=now.strftime("%H:%M:%S")
-               if(i in name_list and d1==date_fromCsv):
+            #This gives individual character of data in line(eg: 2,,u,t,s,u..)
+            #    for data in line:
+            #       print(data)
+               
+                if len(entry)>=6 :
+                    date_fromCsv = line.split(",")[5]
+                    now=datetime.now()
+                    d1=now.strftime("%d-%m-%Y")
+                    dfstring=now.strftime("%H:%M:%S")
+                    if(i in name_list and d1==date_fromCsv):
+                      pass
+                    elif (i in name_list and d1!=date_fromCsv):
+                      f.writelines(f"{i},{n},{d},{e},{dfstring},{d1},Present\n")
+                      self.speech("Attendance marked Thank you")   
+                    else:
+                      pass
+
+                else:
                   pass
-               elif (i in name_list and d1!=date_fromCsv):
-                   f.writelines(f"{i},{n},{d},{e},{dfstring},{d1},Present\n")
-                   self.speech("Attendance marked Thank you")   
-               else:
-                  pass          
+                # now=datetime.now()
+                # d1=now.strftime("%d-%m-%Y")
+                # dfstring=now.strftime("%H:%M:%S")
+                # if(i in name_list and d1==date_fromCsv):
+                #   pass
+                # elif (i in name_list and d1!=date_fromCsv):
+                #    f.writelines(f"{i},{n},{d},{e},{dfstring},{d1},Present\n")
+                #    self.speech("Attendance marked Thank you")   
+                # else:
+                #   pass          
                     
     def speech(self,text):     
         import platform
