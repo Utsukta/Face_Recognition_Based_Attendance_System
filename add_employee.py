@@ -323,7 +323,6 @@ class AddEmployee:
          self.var_Emergency_contact.set(data[9]),
          self.var_radio1.set(data[10])
 
-
         # self.var_employee_id.set(data[0]),
         # self.var_department.set(data[1]),
         # self.var_name.set(data[2]),
