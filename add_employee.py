@@ -360,7 +360,6 @@ class AddEmployee:
                         self.var_Emergency_contact.get(),
                         self.var_radio1.get(),
                         self.var_employee_id.get(),
-
                     ))
                 else:
                     if not Update:
