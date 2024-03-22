@@ -200,7 +200,6 @@ class Attendancesql:
          self.var_date.set(data[5]),
          self.var_attendance_status.set(data[6]),
 
-
     # def update_data(self):
     #  try:
     #     # Confirm if the user wants to update the data
