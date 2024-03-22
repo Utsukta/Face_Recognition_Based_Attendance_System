@@ -150,7 +150,6 @@ class Attendancesql:
         scroll_y.config(command=self.attendance_table.yview)
 
         self.attendance_table.heading("employee_id", text="Employee Id")
-        
         self.attendance_table.heading("name", text="Name")
         self.attendance_table.heading("email", text="Email")
         self.attendance_table.heading("dep", text="Department")
