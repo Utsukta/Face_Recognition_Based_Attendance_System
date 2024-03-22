@@ -1,5 +1,4 @@
-class Constants:
-        
+class Constants: 
         shared_background_color="darkblue"
         shared_text_color="white"
         content_background_color="white"
