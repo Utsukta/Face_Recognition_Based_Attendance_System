@@ -67,7 +67,6 @@ class Train:
         cv2.destroyAllWindows()
         messagebox.showinfo("Result","Training Image Data Completed!!")
 
-
 if __name__ == "__main__":
     root = tk.Tk()
     Train_obj = Train(root)
