@@ -372,7 +372,6 @@ class AddEmployee:
             except Exception as e:
                 messagebox.showerror("Error",f"Due to:{str(e)}",parent=self.root)
 
-
     #--------delete function--------------
     def delete_data(self):
         if self.var_employee_id.get()=="":
