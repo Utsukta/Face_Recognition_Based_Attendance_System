@@ -21,7 +21,6 @@ class Photos:
         bg_img= Label(self.root, image=self.photoimg)
         bg_img.place(x=150,y=0, width=1280,height=900)
 
-
         # img1 = Image.open("../Face_recogniton_system/Images/facial-recognition-attendance-system.png")
         # img1=img1.resize((500,400), Image.Resampling.LANCZOS)
         # self.photoimg1 = ImageTk.PhotoImage(img1)
