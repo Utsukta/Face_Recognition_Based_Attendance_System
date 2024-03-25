@@ -417,7 +417,6 @@ class AddEmployee:
                     return
             else:
                 messagebox.showerror("ID not found","Employee Id is not available")
-           
 
     #--------reset function------------
     def reset_data(self):
