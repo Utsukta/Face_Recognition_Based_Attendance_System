@@ -49,9 +49,6 @@ class Employee_Details:
     def update_date(self, event=None):
         selected_date = event.widget.get_date()
         self.var_joined_date.set(selected_date)
-
-
-
     
 
 if __name__ == "__main__": 
