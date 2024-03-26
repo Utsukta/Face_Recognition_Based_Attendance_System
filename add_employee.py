@@ -418,6 +418,7 @@ class AddEmployee:
             else:
                 messagebox.showerror("ID not found","Employee Id is not available")
 
+
     #--------reset function------------
     def reset_data(self):
         self.var_employee_id.set(""),
