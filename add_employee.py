@@ -409,8 +409,7 @@ class AddEmployee:
                 self.reset_data()
                 messagebox.showinfo("Delete","Employee Details Succesfully Deleted")
                 
-                conn.close()
-                           
+                conn.close()         
                 
                else:
                 if not delete:
