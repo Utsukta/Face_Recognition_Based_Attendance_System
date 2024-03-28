@@ -1,12 +1,9 @@
 import csv
 import tkinter as tk
-from tkinter import END, Button, Label, LabelFrame, Frame, RIDGE, Radiobutton, StringVar, Text, ttk,messagebox
-from tkinter import filedialog
+from tkinter import END, Button, Label, LabelFrame, Frame, RIDGE, StringVar,ttk,messagebox
 from PIL import Image, ImageTk
 import mysql.connector
 from constants import Constants
-import os
-
 
 my_data=[]
 class Attendancesql:
