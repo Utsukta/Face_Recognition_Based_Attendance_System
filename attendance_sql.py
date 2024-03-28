@@ -260,21 +260,31 @@ class Attendancesql:
             print(e)
 
     def delete_data(self):
+        try:
             conn=mysql.connector.connect(host="localhost",username="root",password="Cre@ture12;",database="face_recognizer")
             my_curser=conn.cursor()
-            check_sql="SELECT employee_id FROM employee WHERE employee_id=%s"
+            check_sql="SELECT employee_id FROM Attendance WHERE employee_id=%s"
             check_val=(self.var_employee_id.get(),)
             my_curser.execute(check_sql,check_val)
-            existing_is=my_curser.fetchone()
+            existing_is=my_curser.fetchall()
+            print(existing_is)
+            print(self.var_date.get())
 
             if existing_is:
                delete=messagebox.askyesno("Employee Delete Page","Do you want to delete the data?",parent=self.root)
                if delete>0:
-                   my_curser.execute("DELETE FROM Attendance WHERE employee_id=%s",(self.var_employee_id.get(),))
+                   delete_sql="DELETE FROM Attendance WHERE employee_id=%s AND date=%s AND time=%s"
+                   delete_val=(self.var_employee_id.get(),self.var_date.get(),self.var_time.get())
+                   print(delete_val)
+                   my_curser.execute(delete_sql,delete_val)
                    conn.commit()
+                   print("Rows Deleted:", my_curser.rowcount)
+                   messagebox.showinfo("Success", "Data deleted successfully")
                    self.get_data()
                    self.reset_data()
             conn.close()
+        except Exception as e:
+            messagebox.showerror("Error",f"Due to:{str(e)}",parent=self.root)
 
             
     def update_data(self):
