@@ -199,48 +199,6 @@ class Attendancesql:
          self.var_time.set(data[4]),
          self.var_date.set(data[5]),
          self.var_attendance_status.set(data[6]),
-
-    # def update_data(self):
-    #  try:
-    #     # Confirm if the user wants to update the data
-    #     Update = messagebox.askyesno("Update", "Do you want to update this student details", parent=self.root)
-    #     if Update:
-    #         # Get the data from the GUI fields
-    #         # var_department = self.var_department.get()
-    #         # var_name = self.var_name.get()
-    #         # var_email = self.var_email.get()
-    #         var_employee_id = self.var_employee_id.get()
-    #         # var_time = self.var_time.get()
-    #         # var_date = self.var_date.get()
-    #         var_attendance_status = self.var_attendance_status.get()
-
-    #         # Open the CSV file for reading and writing
-    #         with open('attendance.csv', "r+") as f:
-    #             # Read all lines from the CSV file
-    #             myDataList = f.readlines()
-    #             # Iterate through each line to find the row corresponding to the selected entry
-    #             for i, line in enumerate(myDataList):
-    #                 # Split the line into fields
-    #                 fields = line.strip().split(',')
-    #                 print(fields)
-    #                 # Check if the employee ID in the CSV matches the one selected
-    #                 if fields[0] == var_employee_id:
-    #                     fields[-1] = var_attendance_status
-    #                     # Rewrite the line with updated data
-    #                     myDataList[i] = ','.join(fields) + '\n'
-    #                     break  # Exit loop after updating the entry
-
-    #             # Move to the beginning of the file and overwrite the entire CSV with the updated data
-    #             f.seek(0)
-    #             f.writelines(myDataList)
-
-    #     else:
-    #         return  # Do nothing if the user chooses not to update
-    #     messagebox.showinfo("Success", "Attendance details successfully updated", parent=self.root)
-    #     # Update the table with the new data from the CSV file
-    #     self.importCsv()
-    #  except Exception as e:
-    #     messagebox.showerror("Error", f"Due to: {str(e)}", parent=self.root)
     
     def get_data(self):
         try:
